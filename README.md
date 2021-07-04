@@ -25,4 +25,4 @@
 
 |회차|일자|참여자|
 |:-:|:-:|:--:|
-|1|2021.07.04 - 2021.08.08|[이태현](https://github.com/0417taehyun)|
+|[1회차](https://github.com/week-with-me/TWIL/blob/main/1.%202021.07.04%20-%202021.08.08)|2021.07.04 - 2021.08.08|[김주혜](https://studio-diidi.tistory.com), [노하은](https://github.com/hepaper3), [성승익](https://github.com/iksflow), [이태현](https://github.com/0417taehyun), [정선미](https://github.com/katej927)|
