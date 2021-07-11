@@ -7,7 +7,7 @@
 
 이 그림을 보지않고, 그려내고 설명할 수 있다면, 면접에서는 문제 없지 않을까,,??
 
-![요청과정 도식화](./Images/1.png)
+![요청과정 도식화](./Images/1.PNG)
 
 [출처](http://tcpschool.com/webbasic/works)
 
@@ -33,7 +33,7 @@
 
 [출처](https://wangin9.tistory.com/entry/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%97%90-url-%EC%9E%85%EB%A0%A5-%ED%9B%84-%EC%9D%BC%EC%96%B4%EB%82%98%EB%8A%94-%EC%9D%BC%EB%93%A4-intro?category=827054)
 
-![요약그림](./Images/2.png)
+![요약그림](./Images/2.PNG)
 
 ## 2.1 URL 파싱
 
@@ -73,7 +73,7 @@
 
 5) Data Link Layer를 통해 ARP요청
 
-![ARP 요청](./Images/3.png)
+![ARP 요청](./Images/3.PNG)
 
 6) 컴퓨터와 라우터가 직접 연결 : 라우터가 ARP Reply
 
@@ -81,7 +81,7 @@
 
     컴퓨터가 스위치에 연결되어 있다면 : 스위치가 ARP Reply
 
-![ARP 응답](./Images/4.png)
+![ARP 응답](./Images/4.PNG)
 
 ## 2.3 소켓열기
 
@@ -91,7 +91,7 @@ IP주소를 전달받고, 호스트명/포트번호 뽑아내서 socket이라는
 
 이제 Transport Layer, Network Layer, Link Layer을 거쳐 출발지/목적지 정보를 저장.
 
-![소켓흐름](./Images/5.png)
+![소켓흐름](./Images/5.PNG)
 
  1) Transport Layer (세그먼트) : 목적지 포트번호, 출발지 포트번호
 
@@ -133,19 +133,19 @@ IP주소를 전달받고, 호스트명/포트번호 뽑아내서 socket이라는
 
     그렇지 않다면 HTTP 요청 보냄.
 
-![HTTP 요청](./Images/6.png)
+![HTTP 요청](./Images/6.PNG)
 
 2) 요청과 헤더를 보낸 후에,  하나의 빈 줄을 서버에 보내 요청 내용이 모두 보내졌음을 알림.
 
 3) 서버는 HTTP 코드를 통해서 요청에 대해 답변을 함.(캐시에 없을 경우)
 
-![HTTP 응답](./Images/7.png)
+![HTTP 응답](./Images/7.PNG)
 
 4) 빈 줄을 하나 붙인 뒤, [www.google.com](http://www.google.com/) 의 HTML 본문을 페이로드에 담아 보냄.
 
 3') 서버는 HTTP 코드를 통해서 요청에 대해 답변을 함.(캐시에 있을 경우)
 
-![응답](./Images/8.png)
+![응답](./Images/8.PNG)
 
 4') 브라우저가 자체 캐시에서 HTML 폼을 가져옴
 
