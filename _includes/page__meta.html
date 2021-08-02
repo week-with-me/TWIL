@@ -1,6 +1,7 @@
 {% assign document = post | default: page %}
 {% if document.read_time or document.show_date %}
   <p class="page__meta">
+    {% if document.author %}<span class="">written by {{document.author}} </span>{% endif %}
     {% if document.show_date and document.date %}
       {% assign date = document.date %}
       <span class="page__meta-date">
@@ -11,7 +12,6 @@
     {% endif %}
 
     {% if document.read_time and document.show_date %}<span class="page__meta-sep"></span>{% endif %}
-
     {% if document.read_time %}
       {% assign words_per_minute = document.words_per_minute | default: site.words_per_minute | default: 200 %}
       {% assign words = document.content | strip_html | number_of_words %}

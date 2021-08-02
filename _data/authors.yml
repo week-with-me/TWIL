@@ -1,0 +1,30 @@
+이주:
+  name: "이주"
+  bio: "글쓰는 개발자, 이주입니다."
+  location: "Seoul, Republic of Korea"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:0417taehyun@gmail.com"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://www.weekwith.me"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/0417taehyun"
+
+
+정선미:
+  name: "정선미"
+  bio: "정선미"
+  location:
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:0417taehyun@gmail.com"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://www.weekwith.me"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/0417taehyun"      

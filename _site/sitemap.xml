@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>/</loc>
+<loc>https://week-with-me.github.io/TWIL/1%EA%B8%B0/%EC%98%A4%EB%A6%AC%EC%97%94%ED%85%8C%EC%9D%B4%EC%85%98-%EB%B0%8F-Git-%EC%82%AC%EC%9A%A9%EB%B2%95/</loc>
+<lastmod>2021-07-04T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>https://week-with-me.github.io/TWIL/1%EA%B8%B0/%EC%A7%84%EB%B2%95%EA%B3%BC-%EC%9E%90%EB%B0%94%EC%9D%98-%EB%B3%80%EC%88%98-%EB%A9%94%EB%AA%A8%EB%A6%AC/</loc>
+<lastmod>2021-07-11T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>https://week-with-me.github.io/TWIL/1%EA%B8%B0/CS-%EA%B0%9D%EC%B2%B4-%EC%A7%80%ED%96%A5-%EA%B8%B0%EB%B2%95/</loc>
+<lastmod>2021-07-11T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>https://week-with-me.github.io/TWIL/2%EA%B8%B0/%EC%9E%90%EB%B0%94%EC%9D%98-%EC%97%B0%EC%82%B0%EC%9E%90/</loc>
+<lastmod>2021-07-18T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>https://week-with-me.github.io/TWIL/categories/1%EA%B8%B0/</loc>
+</url>
+<url>
+<loc>https://week-with-me.github.io/TWIL/categories/2%EA%B8%B0/</loc>
+</url>
+<url>
+<loc>https://week-with-me.github.io/TWIL/about/</loc>
+</url>
+<url>
+<loc>https://week-with-me.github.io/TWIL/</loc>
 </url>
 </urlset>
