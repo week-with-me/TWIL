@@ -28,8 +28,24 @@ toc_sticky: true
 [Issues](https://github.com/week-with-me/TWIL/issues)에 양식에 따라 적어주세요! 제가 그곳에 답변드리겠습니다.
 
 ### 참여자 소개
-> 아래는 지금까지 TWIL에 참여한 사람들이에요! 궁금한 사람의 이름을 누르면 그 사람을 더 잘 알 수 있을 거예요
+아래는 지금까지 TWIL에 참여한 사람들이에요! 궁금한 사람의 이름을 누르면 그 사람을 더 잘 알 수 있을 거예요.
 
-|기수|일자|참여자|
-|:-:|:-:|:--:|
-|[1기](https://github.com/week-with-me/TWIL/blob/main/1.%202021.07.04%20-%202021.08.08)|2021.07.04 - 2021.08.08|[김주혜](https://studio-diidi.tistory.com), [노하은](https://github.com/hepaper3), [성승익](https://github.com/iksflow), [신태범](https://github.com/TaeBeomShin), [이동근](https://github.com/gledong12), [이태현](https://github.com/0417taehyun), [정선미](https://github.com/katej927)|
+<table>
+    <tr>
+        <th>기수</th>
+        <th>일자</th>
+        <th>참여자</th>
+    </tr>
+    <tr>
+        <td><a href="">1기</a></td>
+        <td>2021.07.04 - 2021.08.08</td>
+        <td><a href="https://github.com/iksflow">성승익</a></td>
+        <td><a href="https://github.com/TaeBeomShin">신태범</a></td>
+        <td><a href="https://github.com/gledong12">이동근</a></td>
+        <td><a href="https://www.weekwith.me">이태현</a></td>
+        <td><a href="https://github.com/katej927">정선미</a></td>
+    </tr>
+        <td><a href="">2기</a></td>
+        <td>2021.09.01 - 2021.09.22</td>
+        <td><a href="https://www.weekwith.me">이태현</a></td>
+</table>

@@ -13,18 +13,43 @@
       icon: "fab fa-fw fa-github"
       url: "https://github.com/0417taehyun"
 
+정선미:
+  name: "정선미"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/katej927"   
 
 정선미:
   name: "정선미"
-  bio: "정선미"
-  location:
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:0417taehyun@gmail.com"
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
-      url: "https://www.weekwith.me"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/0417taehyun"      
+      url: "https://github.com/hepaper3"   
+
+성승익:
+  name: "성승익"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/iksflow"            
+
+신태범:
+  name: "신태범"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/TaeBeomShin"           
+
+박지연:
+  name: "박지연"
+
+이동근:
+  name: "이동근"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/gledong12"          
+
+이종호:
+  name: "이종호"

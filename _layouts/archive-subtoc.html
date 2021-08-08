@@ -1,0 +1,9 @@
+---
+layout: archive-toc
+---
+{% include functions/find_matched_category_item.html find_array=site.data.navigation.main-sidebar target_category=page.url %}
+{% assign children_category_arr = '' | split: '' %}
+{% assign children_category_arr = children_category_arr | push: matched_category %}
+{% assign grouped_posts = site.posts | group_by: 'categories' %}
+{% include functions/make_toc_tree_v3.html arr=children_category_arr grouped_posts=grouped_posts %}
+{{ content }}

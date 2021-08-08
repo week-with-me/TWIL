@@ -13,7 +13,7 @@ repository               : "week-with-me/TWIL" # GitHub username/repo-name e.g. 
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
-breadcrumbs              : true # true, false (default)
+breadcrumbs              : false # true, false (default)
 words_per_minute         : 200
 comments:
   provider               : "disqus"
@@ -228,6 +228,15 @@ compress_html:
 
 # Defaults
 defaults:
+  # default
+  - scope:
+      path: ""
+    values:
+      layout: home
+      auth_profile: true
+      sidebar:
+        nav: side-bar
+
   # _posts
   - scope:
       path: ""
@@ -235,14 +244,21 @@ defaults:
     values:
       layout: single
       author_profile: true
+      show_date: true
       read_time: false
       comments: true
       share: true
       related: true
+      toc_sticky: true
+      sidebar:
+        nav: side-bar
+
   # _pages
   - scope:
       path: "_pages"
       type: pages
     values:
-      layouts: single
+      layout: single
       author_profile: true
+      sidebar:
+        nav: side-bar
