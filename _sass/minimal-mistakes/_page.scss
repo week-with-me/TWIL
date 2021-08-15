@@ -304,6 +304,15 @@ body {
   text-transform: uppercase;
 }
 
+.page__meta-author {
+  font-size: $type-size-6;
+  margin-bottom: 0px;
+}
+
+.page__meta-date {
+  font-size: $type-size-6;
+}
+
 .page__meta-sep::before {
   content: "\2022";
   padding-left: 0.5em;

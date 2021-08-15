@@ -1,5 +1,7 @@
 {%- for post in site.categories[include.taxonomy] -%}
+  {% if post.categories.last contains page.author %}
     {%- unless post.hidden -%}
-        {% include archive-single.html %}
+      {% include archive-single.html %}
     {%- endunless -%}
+  {% endif %}
 {%- endfor -%}

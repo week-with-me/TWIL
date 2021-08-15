@@ -233,7 +233,6 @@ defaults:
       path: ""
     values:
       layout: home
-      auth_profile: true
       sidebar:
         nav: side-bar
 
