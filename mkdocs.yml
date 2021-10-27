@@ -1,0 +1,93 @@
+site_name: TWIL
+site_description: This Week I Learned, TWIL
+site_url: https://twil.weekwith.me
+theme:
+  name: material
+  custom_dir: overrides
+  language: en
+  palette: 
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode      
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+  features:
+    - header.autohide      
+    - navigation.tabs
+    - search.suggest
+    - search.highlight
+    - content.code.annotate    
+  icon:
+    repo: fontawesome/brands/github-alt
+repo_name: GitHub
+repo_url: https://github.com/week-with-me/TWIL
+edit_uri: ''
+
+plugins:
+- search
+- markdownextradata:
+    data: data 
+
+markdown_extensions:
+- meta
+- toc:
+    permalink: true
+- markdown.extensions.codehilite:
+    guess_lang: false
+- mdx_include:
+    base_path: docs
+- admonition
+- codehilite
+- extra
+- pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: !!python/name:pymdownx.superfences.fence_code_format ''
+- pymdownx.tabbed  
+
+nav:
+- About me: index.md
+- 1기:
+  - 박지연:
+    - 1기/박지연/2021-07-11-TypeScript의 기초.md
+    - 1기/박지연/2021-07-18-javascript 변수, 데이터 타입.md
+#   - 성승익:
+#     - 1기/성승익
+#   - 신태범:
+#     - 1기/신태범
+
+#   - 이동근:
+#     - 1기/이동근
+
+#   - 이종호:
+#     - 1기/이종호
+
+#   - 이태현:
+#     - 1기/이태현
+
+#   - 정선미:
+#     - 1기/정선미
+
+# - 2기:
+#   - 성승익:
+#   - 이태현:
+#   - 정선미:
+
+# - 3기:
+#   - 구민규:
+#   - 성승익:
+#   - 이태현:
+#   - 정선미:
+
+
+
+extra_css:
+- css/termynal.css
+- css/custom.css
+extra_javascript:
+- js/termynal.js
+- js/custom.js      

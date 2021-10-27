@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block disqus %}
+  {% for author, date in page.meta.source %}
+    <p>작성자: {{ author }}, 작성일: {{ date }}</p>
+  {% endfor %}
+  <!-- Add custom comment system integration here -->
+  {% if not page.is_index %}
+    <div id="__comments">
+      <hr />
+      <script src="https://utteranc.es/client.js"
+        repo="week-with-me / TWIL"
+        issue-term="pathname"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </div>
+  {% endif %}
+{% endblock %}
