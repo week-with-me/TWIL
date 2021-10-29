@@ -7,7 +7,7 @@ jobs:
   deploy:
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: [3.8, 3.9]
     runs-on: ubuntu-latest
     steps:
       - name: Set-up GitHub
@@ -29,4 +29,6 @@ jobs:
           poetry install
 
       - name: Deploy
-        run: PYTHONPATH=src/ poetry run python -m mkdocs gh-deploy --force
+        run: |
+          source $HOME/.poetry/env
+          poetry run mkdocs gh-deploy --force
