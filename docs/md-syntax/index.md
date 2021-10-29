@@ -13,13 +13,13 @@ title: "마크다운 문법 소개"
 
 예를 들어 `docs_src/md-syntax/test.py`라는 파일이 아래와 같이 존재합니다.
 
-```python
-def greeting(name):
-    return f"Hello, {name}!"
-
-def get_name(name):
-    greeting(name)
-```
+    ```python
+    def greeting(name):
+        return f"Hello, {name}!"
+        
+    def get_name(name):
+        greeting(name)
+    ```
 
 이때 `python{!../docs_src/md-syntax/test.py!}`와 같이 사용할 수 있습니다. 그러면 아래와 같이 코드가 작성됩니다.
 
