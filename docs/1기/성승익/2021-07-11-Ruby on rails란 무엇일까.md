@@ -1,10 +1,10 @@
 ---
 title: "Ruby on rails를 알아봅시다!"
 author: 성승익
-toc: true
-toc_sticky: true
-categories: 1기
+date: "2021-07-11"
 ---
+
+# Ruby on rails를 알아봅시다!
 
 ## 1. Ruby on rails는 ?
 

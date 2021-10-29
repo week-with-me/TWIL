@@ -4,6 +4,8 @@ author: 박지연
 date: "2021-07-11"
 ---
 
+# Typescript의 기초
+
 ## 1. Typescript를 사용하는 이유
 
 Javascript는 Weakly-typed 된 언어이기 때문에 특정 숫자 변수를 선언한 후에 다른 타입의 값을 변수에 넣을 수 있습니다.

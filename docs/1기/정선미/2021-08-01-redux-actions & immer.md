@@ -1,18 +1,18 @@
 ---
 title: "Redux-actions & immer"
+date: "2021-08-01"
 author: 정선미
-toc: true
-toc_sticky: true
-categories: 1기
 ---
 
-## 🔹 효과
+# Redux-actions & immer
+
+### 🔹 효과
 
 더 짧게 작성 → 가독성 ⬆, 객체 직접 작성x
 
-## 🔹 사용법
+### 🔹 사용법
 
-### 🔸 액션 생성 함수
+#### 🔸 액션 생성 함수
 
 - `createAction` 사용
 - (액션에 필요한) 추가 데이터 : payload
@@ -49,7 +49,7 @@ const action = myAction("hello world");
 export const toggle = createAction(TOGGLE, (id) => id);
 ```
 
-### 🔸 리듀서
+#### 🔸 리듀서
 
 > `handleActions` 사용
 
@@ -88,7 +88,7 @@ const todos = handleActions(
 );
 ```
 
-# 📌 immer
+## 📌 immer
 
 - **모듈 상태가 복잡 ⬆ → 불변성 지키기 어려움**
 

@@ -4,7 +4,9 @@ author: 박지연
 date: "2021-07-18"
 ---
 
-# JavaScript의 변수
+# Javascript 변수, 데이터 타입
+
+## JavaScript의 변수
 
 JavaScript의 변수는 var, let, const로 선언할 수 있습니다.
 
@@ -68,7 +70,7 @@ name = "Hello World!";
 
 ---
 
-# Data Types
+## Data Types
 
 ### 1. Number
 
