@@ -51,8 +51,8 @@ markdown_extensions:
 nav:
 - About TWIL:
   - index.md
+  - writing-guideline/index.md
   - guideline/index.md
-  - md-syntax/index.md
 - 1기:
   - 박지연:
     - 1기/박지연/2021-07-11-TypeScript의-기초.md

@@ -1,8 +1,8 @@
 ---
-title: "About TWIL"
+title: "TWIL 소개"
 ---
 
-# About TWIL
+# TWIL 소개
 
 ## What is TWIL?
 **트윗(Twit)**이라는 말 들어보셨나요?  
