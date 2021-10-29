@@ -1,3 +1,11 @@
+---
+title: "TS Refact Legacy1"
+author: 이종호
+date: "2021-08-08"
+---
+
+# TS Refact Legacy1
+
 ## fetch headers 설정
 ```ts
 const requestHeaders: HeadersInit = new Headers();

@@ -1,3 +1,11 @@
+---
+title: "TS Refact Legacy2"
+author: 이종호
+date: "2021-08-08"
+---
+
+# TS Refact Legacy2
+
 ```ts
 type Product = {
   id: number;

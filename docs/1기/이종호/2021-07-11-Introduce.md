@@ -1,12 +1,12 @@
 ---
 title: "TS Introduction"
 author: 이종호
-toc: true
-toc_sticky: true
-categories: 1기
+date: "2021-07-11"
 ---
 
-# Introduction
+# TS Introduction
+
+## Introduction
 > JavaScript that scales
 > - TypeScript 캐치 프레이즈
 
@@ -17,14 +17,14 @@ JavaScript로 컴파일 되는 언어라고 하니 CoffeeScript가 떠오른다.
 
 TypeScript는 오픈 소스이며, 마이크로소프트는 TypeScript를 계속해서 개선하고 있다. 최근에는 V2.0 버전이 배포되었고 여러가지 기능이나 이슈는 지금도 계속 보완되는 중이다.
 
-## Why use?
+### Why use?
 TypeScript를 사용하면 정적 타이핑이 가지는 장점을 JavaScript에 적용할 수 있다. 정적 타이핑은 컴파일 타임에 타입체크를 한다. 당연히 에러는 발생하지 않는게 가장 좋지만, 만약 발생했다면 컴파일타이 에러가 런타임 에러보다 낫다.
 
 문서화 측면에서도 뛰어나다. JavaScript 문서화 도구인 JSDoc이 Type annotation을 지원하느 것과 일맥상통한다. 제대로 된 Type annotation은 그 자체로 문서화다.
 
 물론 정적 타이핑과 동적 타이핑은 무엇이 우위라고 볼 수 없는 것이 사실이다. 이 관계에는 Trade-off가 있다고 볼 수 있으며, 일반적으로 꼽는 정적 타이핑의 단점은 바로 생산성이다. 때문에 TypScript에서는 생산성보다는 안정성이 중요시된는 대규모 JavaScript 어플리케이션 개발에 적합하다고 한 것이다.
 
-## Features
+### Features
 TypeScript의 기능들은 크게 보면 정적 파이핑과 ECMASCript구현으로 나뉠 수 있다.
 - Type annotation & 정적 타입 체크
 - 타입 추론
