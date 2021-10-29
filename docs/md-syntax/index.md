@@ -21,7 +21,7 @@ def get_name(name):
     greeting(name)
 ```
 
-이때 ` ```python{!../docs_src/md-syntax/test.py!}``` `와 같이 사용할 수 있습니다. 그러면 아래와 같이 코드가 작성됩니다.
+이때 `python{!../docs_src/md-syntax/test.py!}`와 같이 사용할 수 있습니다. 그러면 아래와 같이 코드가 작성됩니다.
 
 ```python
 {!../docs_src/md-syntax/test.py!}
@@ -47,7 +47,7 @@ CLI(Command Line Interface) 관련 명령어를 조금 더 멋지게 장식할 �
 
 예를 들어 `$ pip install twil`이라는 명령어와 그에 대한 결괏값으로 `Successfully Installed twil`이라는 문장을 보여지게 한다고 생각해봅시다.
 
-우선 `<div class="termy"> </div>`라는 `div` 태그를 만든뒤 그 내부에 ` ```console $ pip install twil Successfully Installed twil``` `과 같이 작성합니다. 그 결과는 아래와 같습니다.  
+우선 `<div class="termy"> </div>`라는 `div` 태그를 만든뒤 그 내부에 `console $ pip install twil Successfully Installed twil`과 같이 작성합니다. 그 결과는 아래와 같습니다.  
 
 <div class="termy">
     ``` console
@@ -58,9 +58,9 @@ CLI(Command Line Interface) 관련 명령어를 조금 더 멋지게 장식할 �
 </div>
 <br />
 
-이때 ` ```console``` ` 부분은 들여쓰기 하며, `$`를 통해서 명령어가 실행되고 그 결괏값이 아래 나타나게 됩니다.
+이때 `console` 부분은 들여쓰기 하며, `$`를 통해서 명령어가 실행되고 그 결괏값이 아래 나타나게 됩니다.
 
-
+---
 
 ## 마크다운 문법 소개 로그
 
