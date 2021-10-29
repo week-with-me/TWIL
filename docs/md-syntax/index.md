@@ -13,13 +13,10 @@ title: "마크다운 문법 소개"
 
 예를 들어 `docs_src/md-syntax/test.py`라는 파일이 아래와 같이 존재합니다.
 
-    ```python
-    def greeting(name):
-        return f"Hello, {name}!"
-        
-    def get_name(name):
-        greeting(name)
-    ```
+```python
+def greeting(name):
+    return f"Hello, {name}!
+```    
 
 이때 `python{!../docs_src/md-syntax/test.py!}`와 같이 사용할 수 있습니다. 그러면 아래와 같이 코드가 작성됩니다.
 
@@ -28,9 +25,9 @@ title: "마크다운 문법 소개"
 ```
 
 ### 하이라이팅
-이때 `python` 옆에 `python hl_lines=5-6`과 같이 작성하여 `5`에서 `6`번째 줄에 하이라이팅이 됩니다. 결과는 아래와 같습니다. 
+이때 `python` 옆에 `python hl_lines=5-6`과 같이 작성하여 `1`에서 `2`번째 줄에 하이라이팅이 됩니다. 결과는 아래와 같습니다. 
 
-```python hl_lines=5-6
+```python hl_lines=1-2
 {!../docs_src/md-syntax/test.py!}
 ```
 
