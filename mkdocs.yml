@@ -50,7 +50,7 @@ markdown_extensions:
 
 nav:
 - About TWIL:
-  - about-twil/index.md
+  - index.md
   - guideline/index.md
   - md-syntax/index.md
 - 1기:
