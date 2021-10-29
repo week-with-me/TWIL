@@ -27,7 +27,7 @@ def greeting(name):
 ### 하이라이팅
 이때 `python` 옆에 `python hl_lines=5-6`과 같이 작성하여 `1`에서 `2`번째 줄에 하이라이팅이 됩니다. 결과는 아래와 같습니다. 
 
-```python hl_lines=1-2
+```python hl_lines="1-2"
 {!../docs_src/md-syntax/test.py!}
 ```
 
@@ -47,9 +47,8 @@ CLI(Command Line Interface) 관련 명령어를 조금 더 멋지게 장식할 �
 우선 `<div class="termy"> </div>`라는 `div` 태그를 만든뒤 그 내부에 `console $ pip install twil Successfully Installed twil`과 같이 작성합니다. 그 결과는 아래와 같습니다.  
 
 <div class="termy">
-    ``` console
+    ``` sh
     $ pip install
-
     Successfully Installed twil
     ```
 </div>
