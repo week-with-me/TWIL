@@ -45,68 +45,68 @@ date: "2021-09-20"
  
     2. 리덕스를 위한 코드를 준비합니다. 먼저 counter의 리덕스 모듈을 작성합니다.
         - 코드 ( modules/counter.js )
-            ``` js
-            import { createAction, handleActions } from "redux-actions";
+        ``` jsx
+        import { createAction, handleActions } from "redux-actions";
 
-            // 액션 타입
-            const INCREASE = "counter/INCREASE";
-            const DECREASE = "counter/DECREASE";
+        // 액션 타입
+        const INCREASE = "counter/INCREASE";
+        const DECREASE = "counter/DECREASE";
 
-            // 액션 생성 함수
-            export const increase = createAction(INCREASE);
-            export const decrease = createAction(DECREASE);
+        // 액션 생성 함수
+        export const increase = createAction(INCREASE);
+        export const decrease = createAction(DECREASE);
 
-            // 초기 값
-            const initialState = 0; // 상태는 꼭 객체일 필요가 없습니다. 숫자도 작동
+        // 초기 값
+        const initialState = 0; // 상태는 꼭 객체일 필요가 없습니다. 숫자도 작동
 
-            // 리듀서
-            const counter = handleActions(
-            {
-                [INCREASE]: (state) => state + 1,
-                [DECREASE]: (state) => state - 1,
-            },
-            initialState
-            );
+        // 리듀서
+        const counter = handleActions(
+        {
+            [INCREASE]: (state) => state + 1,
+            [DECREASE]: (state) => state - 1,
+        },
+        initialState
+        );
 
-            export default counter;
-            ```
+        export default counter;
+        ```
             ​
     3. 루트 리듀서를 생성합니다.  
         - 코드 ( modules/index.js )
-            ``` js
-            import { combineReducers } from "redux";
-            import counter from "./counter";
+        ``` jsx
+        import { combineReducers } from "redux";
+        import counter from "./counter";
 
-            const rootReducer = combineReducers({
-            counter,
-            });
+        const rootReducer = combineReducers({
+        counter,
+        });
 
-            export default rootReducer;
-            ```
+        export default rootReducer;
+        ```
 
     4. `src/index.js`에 스토어를 생성합니다. 그리고 Provider로 리덕스를 적용합니다.
         - 코드 ( src/index.js )
-            ``` js
-            import React from "react";
-            import ReactDOM from "react-dom";
-            import { createStore } from "redux";
-            import { Provider } from "react-redux";
-            import "./index.css";
-            import App from "./App";
-            import reportWebVitals from "./reportWebVitals";
-            import rootReducer from "./modules";
+        ``` jsx
+        import React from "react";
+        import ReactDOM from "react-dom";
+        import { createStore } from "redux";
+        import { Provider } from "react-redux";
+        import "./index.css";
+        import App from "./App";
+        import reportWebVitals from "./reportWebVitals";
+        import rootReducer from "./modules";
 
-            const store = createStore(rootReducer);
+        const store = createStore(rootReducer);
 
-            ReactDOM.render(
-            <Provider store={store}>
-                <App />
-            </Provider>,
-            document.getElementById("root")
-            );
+        ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
+        document.getElementById("root")
+        );
 
-            reportWebVitals();
-            ```
+        reportWebVitals();
+        ```
  
     5. counter 컴포넌트 (프레젠테이셔널)와 counter 컨테이너 컴포넌트를 만듭니다.
         - presentational 컴포넌트
@@ -118,64 +118,64 @@ date: "2021-09-20"
                 - 리덕스 스토어에 액션을 디스패치 합니다.
             - 위치: containers 디렉터리
         - 코드( components/Counter.js )
-            ``` js
-            import React from "react";
+        ``` jsx
+        import React from "react";
 
-            const Counter = ({ onIncrease, onDecrease, number }) => {
-            return (
-                <div>
-                <h1>{number}</h1>
-                <button onClick={onIncrease}>+1</button>
-                <button onClick={onDecrease}>-1</button>
-                </div>
-            );
-            };
+        const Counter = ({ onIncrease, onDecrease, number }) => {
+        return (
+            <div>
+            <h1>{number}</h1>
+            <button onClick={onIncrease}>+1</button>
+            <button onClick={onDecrease}>-1</button>
+            </div>
+        );
+        };
 
-            export default Counter;
-            ```
+        export default Counter;
+        ```
             ​
         - 코드 ( containers/CounterContainer.js )
-            ``` js
-            import React from "react";
-            import { connect } from "react-redux";
-            import { increase, decrease } from "../modules/counter";
-            import Counter from "../components/Counter";
+        ``` jsx
+        import React from "react";
+        import { connect } from "react-redux";
+        import { increase, decrease } from "../modules/counter";
+        import Counter from "../components/Counter";
 
-            const CounterContainer = ({ number, increase, decrease }) => {
-            return (
-                <Counter number={number} onIncrease={increase} onDecrease={decrease} />
-            );
-            };
+        const CounterContainer = ({ number, increase, decrease }) => {
+        return (
+            <Counter number={number} onIncrease={increase} onDecrease={decrease} />
+        );
+        };
 
-            export default connect(
-            (state) => ({
-                number: state.counter,
-            }),
-            {
-                increase,
-                decrease,
-            }
-            )(CounterContainer);
-            ```  
+        export default connect(
+        (state) => ({
+            number: state.counter,
+        }),
+        {
+            increase,
+            decrease,
+        }
+        )(CounterContainer);
+        ```  
             ​
         -> [presentational / containers 컴포넌트 참고 자료 (리덕스 사용 패턴 부분)](https://velog.io/@katej927/Redux-Redux-%EA%B8%B0%EB%B3%B8-%EA%B0%9C%EB%85%90#-%ED%94%84%EB%A0%88%EC%A0%A0%ED%85%8C%EC%9D%B4%EC%85%94%EB%84%90--%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EB%B6%84%EB%A6%AC-%ED%95%84%EC%88%98-x)
 
     6. App.js 에서 CounterContainer를 렌더링합니다.
         - 코드( src/App.js )
-            ``` js
-            import React from "react";
-            import CounterContainer from "./containers/CounterContainer";
+        ``` jsx
+        import React from "react";
+        import CounterContainer from "./containers/CounterContainer";
 
-            const App = () => {
-            return (
-                <div>
-                <CounterContainer />
-                </div>
-            );
-            };
+        const App = () => {
+        return (
+            <div>
+            <CounterContainer />
+            </div>
+        );
+        };
 
-            export default App;​
-            ```
+        export default App;​
+        ```
 
     7. 작동 확인
         <div class="termy">

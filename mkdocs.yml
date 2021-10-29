@@ -49,7 +49,10 @@ markdown_extensions:
 - pymdownx.tabbed  
 
 nav:
-- About me: index.md
+- About TWIL:
+  - about-twil/index.md
+  - guideline/index.md
+  - md-syntax/index.md
 - 1기:
   - 박지연:
     - 1기/박지연/2021-07-11-TypeScript의-기초.md
