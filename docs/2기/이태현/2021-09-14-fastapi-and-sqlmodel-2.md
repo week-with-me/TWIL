@@ -13,7 +13,7 @@ date: "2021-09-14"
 
 Django, Flask 등의 다른 파이썬 웹 프레임워크와의 비교를 통한 대략적인 FastAPI 특징에 대한 부분은 아래 글을 참고하시면 됩니다.
 
-[[ 공식 문서로 배우는 FastAPI & SQLModel ] 01. FastAPI 소개]()
+[[ 공식 문서로 배우는 FastAPI & SQLModel ] 01. FastAPI 소개](https://twil.weekwith.me/2%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-09-05-fastapi-and-sqlmodel-1/)
 
 오늘은 본격적으로 **FastAPI**를 설치하고 사용해보며, 이 과정에서 필요한 지식인 웹 애플리케이션 서버에 관해 알아보겠습니다.  
 

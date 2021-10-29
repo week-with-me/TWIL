@@ -14,7 +14,7 @@ date: "2021-09-19"
 
 그리고 이 과정에서 익히면 좋을 개념인 서버의 두 종류, 웹 서버(WEB Server)와 웹 애플리케이션 서버(WAS, WEB Application Server)의 개념에 관해 익히고 둘의 차이점을 살펴보았습니다.  
 
-더 자세한 내용은 [[ 공식 문서로 배우는 FastAPI & SQLModel ] 02. FastAPI 설치와 웹 애플리케이션 서버]()를 확인해주시면 감사하겠습니다.  
+더 자세한 내용은 [[ 공식 문서로 배우는 FastAPI & SQLModel ] 02. FastAPI 설치와 웹 애플리케이션 서버](https://twil.weekwith.me/2%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-09-14-fastapi-and-sqlmodel-2/)를 확인해주시면 감사하겠습니다.  
 
 오늘은 이전 코드에 이어서 요청(Request)과 응답(Response) 과정을 이해하기 위해 필요한 개념들을 살펴보고자 합니다.  
 
