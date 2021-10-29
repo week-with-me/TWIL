@@ -45,7 +45,7 @@ date: "2021-09-20"
  
     2. 리덕스를 위한 코드를 준비합니다. 먼저 counter의 리덕스 모듈을 작성합니다.
         - 코드 ( modules/counter.js )
-            ``` jsx
+            ``` js
             import { createAction, handleActions } from "redux-actions";
 
             // 액션 타입
@@ -73,7 +73,7 @@ date: "2021-09-20"
             ​
     3. 루트 리듀서를 생성합니다.  
         - 코드 ( modules/index.js )
-            ``` jsx
+            ``` js
             import { combineReducers } from "redux";
             import counter from "./counter";
 
@@ -86,7 +86,7 @@ date: "2021-09-20"
 
     4. `src/index.js`에 스토어를 생성합니다. 그리고 Provider로 리덕스를 적용합니다.
         - 코드 ( src/index.js )
-            ``` jsx
+            ``` js
             import React from "react";
             import ReactDOM from "react-dom";
             import { createStore } from "redux";
@@ -118,7 +118,7 @@ date: "2021-09-20"
                 - 리덕스 스토어에 액션을 디스패치 합니다.
             - 위치: containers 디렉터리
         - 코드( components/Counter.js )
-            ``` jsx
+            ``` js
             import React from "react";
 
             const Counter = ({ onIncrease, onDecrease, number }) => {
@@ -135,7 +135,7 @@ date: "2021-09-20"
             ```
             ​
         - 코드 ( containers/CounterContainer.js )
-            ``` jsx
+            ``` js
             import React from "react";
             import { connect } from "react-redux";
             import { increase, decrease } from "../modules/counter";
@@ -162,7 +162,7 @@ date: "2021-09-20"
 
     6. App.js 에서 CounterContainer를 렌더링합니다.
         - 코드( src/App.js )
-            ``` jsx
+            ``` js
             import React from "react";
             import CounterContainer from "./containers/CounterContainer";
 
