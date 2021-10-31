@@ -112,7 +112,8 @@ nav:
   # - 성승익: 
   - 이태현:
     - 3기/이태현/2021-10-31-fastapi-and-sqlmodel-4.md
-  # - 정선미:
+   - 정선미:
+    - 3기/정선미/2021-10-31-useCallback-useMemo-useEffect.md
 
 
 extra_css:
