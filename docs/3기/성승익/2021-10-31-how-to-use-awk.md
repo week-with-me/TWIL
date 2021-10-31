@@ -1,3 +1,9 @@
+---
+title: "awk로 표 형식의 데이터를 쉽게 가공해보자!"
+author: "성승익"
+date: "2021-11-01"
+---
+
 # awk로 표 형식의 데이터를 쉽게 가공해보자!
 
  `awk`는 패턴과 일치하는 문자열을 검색할 때 사용하는 명령어입니다.  
@@ -346,4 +352,4 @@ drwxrwxr-x. Directory
 `awk`는 본문에서 소개드리지 못한 다양한 활용방법이 있습니다.  
 자세한 정보는 아래 링크를 참고해 주시기 바랍니다.  
 
-https://man7.org/linux/man-pages/man1/awk.1p.html
+[https://man7.org/linux/man-pages/man1/awk.1p.html](https://man7.org/linux/man-pages/man1/awk.1p.html)
