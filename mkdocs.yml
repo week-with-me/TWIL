@@ -109,13 +109,13 @@ nav:
 - 3기:
   - 구민규:
     - 3기/구민규/2021-10-30-마이크로서비스-아키텍처를-모노레포로-관리하기.md
+    - 3기/구민규/2021-11-07-react에서-side-effect-관리하기.md
   - 성승익: 
     - 3기/성승익/2021-10-31-how-to-use-awk.md
   - 이태현:
     - 3기/이태현/2021-10-31-fastapi-and-sqlmodel-4.md
   - 정선미:
     - 3기/정선미/2021-10-31-useCallback-useMemo-useEffect.md
-
 
 extra_css:
 - css/termynal.css
