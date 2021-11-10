@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+  <meta property="robots" content="noindex, nofollow" />
+{% endblock %}
+
 {% block disqus %}
   {% if not page.is_index %}
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7400981351083358"
