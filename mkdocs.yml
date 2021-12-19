@@ -122,7 +122,7 @@ nav:
     - 3기/정선미/2021-10-31-useCallback-useMemo-useEffect.md
     - 3기/정선미/2021-11-07-React-immer를-통한-불변성-유지.md
     - 3기/정선미/2021-11-14-JS-비동기-콜백함수-Promise-async-await.md
-# - 4기:
+- 4기:
   # - 김경훈: 
 
   # - 김민철:
@@ -133,7 +133,8 @@ nav:
 
   # - 이지영:
 
-  # - 이태현:
+  - 이태현:
+    - 4기/이태현/2021-12-19-python-standard-library-asyncio-for-concurrency.md
 
   - 정선미:
     - 4기/정선미/2021-12-19-TS-타입스크립트를-쓰는-이유.md
