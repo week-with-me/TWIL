@@ -110,20 +110,39 @@ nav:
   - 구민규:
     - 3기/구민규/2021-10-30-마이크로서비스-아키텍처를-모노레포로-관리하기.md
     - 3기/구민규/2021-11-07-react에서-side-effect-관리하기.md
+    - 3기/구민규/2021-11-17-컴포넌트-응집도.md
+    - 3기/구민규/2021-11-22-fp-errorhandling.md
   - 성승익: 
     - 3기/성승익/2021-10-31-how-to-use-awk.md
     - 3기/성승익/2021-11-07-RAID.md
+    - 3기/성승익/2021-11-22-elastic-stack.md
   - 이태현:
     - 3기/이태현/2021-10-31-fastapi-and-sqlmodel-4.md
   - 정선미:
     - 3기/정선미/2021-10-31-useCallback-useMemo-useEffect.md
     - 3기/정선미/2021-11-07-React-immer를-통한-불변성-유지.md
     - 3기/정선미/2021-11-14-JS-비동기-콜백함수-Promise-async-await.md
+# - 4기:
+  # - 김경훈: 
+
+  # - 김민철:
+
+  # - 성승익:
+
+  # - 이수빈:
+
+  # - 이지영:
+
+  # - 이태현:
+
+  - 정선미:
+    - 4기/정선미/2021-12-19-TS-타입스크립트를-쓰는-이유.md
 
 extra:
   analytics:
     provider: google
     property: G-ZL5K1KVSWQ
+
 extra_css:
 - css/termynal.css
 - css/custom.css
