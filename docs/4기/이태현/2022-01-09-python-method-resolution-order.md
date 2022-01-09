@@ -43,11 +43,15 @@ date: "2022-01-09"
 
 이제 아래와 같이 `mro()` 메서드 및 상속 받은 `bark()` 메서드를 출력해보면 다음과 같습니다.
 
+!!! warning "주의"
+
+    실제 출력은 `<class ___>`와 같은 형태입니다. 작성 문법 오류로 인해 `<>` 부분을 다르게 인식하여 해당 부분을 지웠습니다.
+
 <div class="termy">
     ```sh
     $ python 1-example.py
 
-    MRO:  [<class '__main__.Horgi'>, <class '__main__.Husky'>, <class '__main__.Corgi'>, <class '__main__.Dog'>, <class 'object'>]
+    MRO:  [class '__main__.Horgi', class '__main__.Husky', class '__main__.Corgi', class '__main__.Dog', class 'object']
     I'm a Husky.
     ```
 
@@ -69,7 +73,7 @@ date: "2022-01-09"
     ```sh
     $ python 1-example.py
 
-    MRO:  [<class '__main__.Horgi'>, <class '__main__.Corgi'>, <class '__main__.Husky'>, <class '__main__.Dog'>, <class 'object'>]
+    MRO:  [class '__main__.Horgi', class '__main__.Corgi', class '__main__.Husky', class '__main__.Dog', class 'object']
     I'm a Corgi.
     ```
 
@@ -91,7 +95,7 @@ date: "2022-01-09"
     ```sh
     $ python 1-example.py
 
-    MRO: [<class '__main__.Horgi'>, <class '__main__.Husky'>, <class '__main__.Corgi'>, <class '__main__.Dog'>, <class 'object'>]
+    MRO: [class '__main__.Horgi', class '__main__.Husky', class '__main__.Corgi', class '__main__.Dog', class 'object']
     I'm a Corgi.
     ```
 
@@ -127,7 +131,7 @@ date: "2022-01-09"
     ```sh
     $ python 1-example.py
 
-    MRO:  [<class '__main__.Horgi'>, <class '__main__.Husky'>, <class '__main__.Corgi'>, <class '__main__.Dog'>, <class 'object'>]
+    MRO:  [class '__main__.Horgi', class '__main__.Husky', class '__main__.Corgi', class '__main__.Dog', class 'object']
     I'm a Corgi.
     ```
 
