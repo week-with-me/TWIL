@@ -5,17 +5,17 @@ theme:
   name: material
   custom_dir: overrides
   language: en
-  palette: 
+  palette:
     - scheme: default
       toggle:
         icon: material/toggle-switch
-        name: Switch to light mode      
+        name: Switch to light mode
     - scheme: slate
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
   features:
-    - header.autohide      
+    - header.autohide
     - navigation.tabs
     - search.suggest
     - search.highlight
@@ -23,123 +23,120 @@ theme:
     repo: fontawesome/brands/github-alt
 repo_name: GitHub
 repo_url: https://github.com/week-with-me/TWIL
-edit_uri: ''
+edit_uri: ""
 
 plugins:
-- search
-- markdownextradata:
-    data: data 
+  - search
+  - markdownextradata:
+      data: data
 
 markdown_extensions:
-- meta
-- toc:
-    permalink: true
-- markdown.extensions.codehilite:
-    guess_lang: false
-- mdx_include:
-    base_path: docs
-- admonition
-- codehilite
-- extra
-- pymdownx.superfences:
-    custom_fences:
-    - name: mermaid
-      class: mermaid
-      format: !!python/name:pymdownx.superfences.fence_code_format ''
-- pymdownx.tabbed  
+  - meta
+  - toc:
+      permalink: true
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - mdx_include:
+      base_path: docs
+  - admonition
+  - codehilite
+  - extra
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format ""
+  - pymdownx.tabbed
 
 nav:
-- About TWIL:
-  - index.md
-  - writing-guideline/index.md
-  - guideline/index.md
-- 1기:
-  - 박지연:
-    - 1기/박지연/2021-07-11-TypeScript의-기초.md
-    - 1기/박지연/2021-07-18-javascript-변수-데이터-타입.md
-  - 성승익:
-    - 1기/성승익/2021-07-11-Ruby-on-rails란-무엇일까.md
-    - 1기/성승익/2021-07-18-Rails로-게시판을-만들어보자-컨트롤러.md
-    - 1기/성승익/2021-07-25-Rails로-게시판을-만들어보자-모델-1.md
-    - 1기/성승익/2021-08-01-Rails로-게시판을-만들어보자-모델-2.md
-  - 신태범:
-    - 1기/신태범/2021-07-11-CS-하면-생기는-일.md
-    - 1기/신태범/2021-07-18-CS-HTTP-1-vs-HTTP2.md
-    - 1기/신태범/2021-07-25-CS-SQL-vs-NOSQL.md
-  - 이동근:
-    - 1기/이동근/2021-07-11-CS-면접-준비-및-자기소개.md
-    - 1기/이동근/2021-07-18-자바스크립트.md
-    - 1기/이동근/2021-07-25-노드와-자바스크립트.md
-    - 1기/이동근/2021-08-08-node-CRUD-and-간단한-머신러닝-딥러닝.md
-  - 이종호:
-    - 1기/이종호/2021-07-11-Introduce.md
-    - 1기/이종호/2021-07-11-BasicType.md
-    - 1기/이종호/2021-07-11-타입추론-타입단언.md
-    - 1기/이종호/2021-07-11-redux.md
-    - 1기/이종호/2021-07-18-js-oop.md
-    - 1기/이종호/2021-07-18-ts-기본타입.md
-    - 1기/이종호/2021-08-08-TS-refact-legacy1.md
-    - 1기/이종호/2021-08-08-TS-refact-legacy2.md
-  - 이태현:
-    - 1기/이태현/2021-07-04-오리엔테이션-및-Git-사용법.md
-    - 1기/이태현/2021-07-11-진법과-자바의-변수-메모리.md
-    - 1기/이태현/2021-07-18-자바의-연산자.md
-  - 이희진:
-    - 1기/이희진/2021-08-08-인터넷과-프로토콜.md
-  - 정선미:
-    - 1기/정선미/2021-07-11-CS-객체-지향-기법.md
-    - 1기/정선미/2021-07-18-Redux-Basics.md
-    - 1기/정선미/2021-07-25-Redux-Basics-2.md
-    - 1기/정선미/2021-08-01-redux-actions-and-immer.md
-- 2기:
-  - 성승익:
-    - 2기/성승익/2021-09-05-내가-터미널과-친해지려는-이유.md
-    - 2기/성승익/2021-09-12-grep으로-원하는-내용을-검색해보자!.md
-    - 2기/성승익/2021-09-21-find로-원하는-파일을-찾아보자-1.md
-    - 2기/성승익/2021-10-03-find로-원하는-파일을-찾아보자-2.md
-  - 이태현:
-    - 2기/이태현/2021-09-05-fastapi-and-sqlmodel-1.md
-    - 2기/이태현/2021-09-14-fastapi-and-sqlmodel-2.md
-    - 2기/이태현/2021-09-19-fastapi-and-sqlmodel-3.md
-  - 정선미:
-    - 2기/정선미/2021-09-05-javascript-01.md
-    - 2기/정선미/2021-09-12-javascript-02.md
-    - 2기/정선미/2021-09-20-redux-middleware-01.md
-    - 2기/정선미/2021-10-03-cs-osi-7-layers.md
-- 3기:
-  - 구민규:
-    - 3기/구민규/2021-10-30-마이크로서비스-아키텍처를-모노레포로-관리하기.md
-    - 3기/구민규/2021-11-07-react에서-side-effect-관리하기.md
-    - 3기/구민규/2021-11-17-컴포넌트-응집도.md
-    - 3기/구민규/2021-11-22-fp-errorhandling.md
-  - 성승익: 
-    - 3기/성승익/2021-10-31-how-to-use-awk.md
-    - 3기/성승익/2021-11-07-RAID.md
-    - 3기/성승익/2021-11-22-elastic-stack.md
-  - 이태현:
-    - 3기/이태현/2021-10-31-fastapi-and-sqlmodel-4.md
-  - 정선미:
-    - 3기/정선미/2021-10-31-useCallback-useMemo-useEffect.md
-    - 3기/정선미/2021-11-07-React-immer를-통한-불변성-유지.md
-    - 3기/정선미/2021-11-14-JS-비동기-콜백함수-Promise-async-await.md
-- 4기:
-  # - 김경훈: 
-
-  - 김민철:
-    - 4기/김민철/2021-12-22-트랜잭션 알아보기.md
-    - 4기/김민철/2022-01-10-영속성 컨텍스트 알아보기.md
-  - 성승익:
-    - 4기/성승익/2021-12-19-엘라스틱서치의 구성요소들.md
-  # - 이수빈:
-
-  - 이지영:
-    - 4기/이지영/2021-12-19-crontab으로-작업-예약하기.md
-
-  - 이태현:
-    - 4기/이태현/2021-12-19-python-standard-library-asyncio-for-concurrency.md
-
-  - 정선미:
-    - 4기/정선미/2021-12-19-TS-타입스크립트를-쓰는-이유.md
+  - About TWIL:
+      - index.md
+      - writing-guideline/index.md
+      - guideline/index.md
+  - 1기:
+      - 박지연:
+          - 1기/박지연/2021-07-11-TypeScript의-기초.md
+          - 1기/박지연/2021-07-18-javascript-변수-데이터-타입.md
+      - 성승익:
+          - 1기/성승익/2021-07-11-Ruby-on-rails란-무엇일까.md
+          - 1기/성승익/2021-07-18-Rails로-게시판을-만들어보자-컨트롤러.md
+          - 1기/성승익/2021-07-25-Rails로-게시판을-만들어보자-모델-1.md
+          - 1기/성승익/2021-08-01-Rails로-게시판을-만들어보자-모델-2.md
+      - 신태범:
+          - 1기/신태범/2021-07-11-CS-하면-생기는-일.md
+          - 1기/신태범/2021-07-18-CS-HTTP-1-vs-HTTP2.md
+          - 1기/신태범/2021-07-25-CS-SQL-vs-NOSQL.md
+      - 이동근:
+          - 1기/이동근/2021-07-11-CS-면접-준비-및-자기소개.md
+          - 1기/이동근/2021-07-18-자바스크립트.md
+          - 1기/이동근/2021-07-25-노드와-자바스크립트.md
+          - 1기/이동근/2021-08-08-node-CRUD-and-간단한-머신러닝-딥러닝.md
+      - 이종호:
+          - 1기/이종호/2021-07-11-Introduce.md
+          - 1기/이종호/2021-07-11-BasicType.md
+          - 1기/이종호/2021-07-11-타입추론-타입단언.md
+          - 1기/이종호/2021-07-11-redux.md
+          - 1기/이종호/2021-07-18-js-oop.md
+          - 1기/이종호/2021-07-18-ts-기본타입.md
+          - 1기/이종호/2021-08-08-TS-refact-legacy1.md
+          - 1기/이종호/2021-08-08-TS-refact-legacy2.md
+      - 이태현:
+          - 1기/이태현/2021-07-04-오리엔테이션-및-Git-사용법.md
+          - 1기/이태현/2021-07-11-진법과-자바의-변수-메모리.md
+          - 1기/이태현/2021-07-18-자바의-연산자.md
+      - 이희진:
+          - 1기/이희진/2021-08-08-인터넷과-프로토콜.md
+      - 정선미:
+          - 1기/정선미/2021-07-11-CS-객체-지향-기법.md
+          - 1기/정선미/2021-07-18-Redux-Basics.md
+          - 1기/정선미/2021-07-25-Redux-Basics-2.md
+          - 1기/정선미/2021-08-01-redux-actions-and-immer.md
+  - 2기:
+      - 성승익:
+          - 2기/성승익/2021-09-05-내가-터미널과-친해지려는-이유.md
+          - 2기/성승익/2021-09-12-grep으로-원하는-내용을-검색해보자!.md
+          - 2기/성승익/2021-09-21-find로-원하는-파일을-찾아보자-1.md
+          - 2기/성승익/2021-10-03-find로-원하는-파일을-찾아보자-2.md
+      - 이태현:
+          - 2기/이태현/2021-09-05-fastapi-and-sqlmodel-1.md
+          - 2기/이태현/2021-09-14-fastapi-and-sqlmodel-2.md
+          - 2기/이태현/2021-09-19-fastapi-and-sqlmodel-3.md
+      - 정선미:
+          - 2기/정선미/2021-09-05-javascript-01.md
+          - 2기/정선미/2021-09-12-javascript-02.md
+          - 2기/정선미/2021-09-20-redux-middleware-01.md
+          - 2기/정선미/2021-10-03-cs-osi-7-layers.md
+  - 3기:
+      - 구민규:
+          - 3기/구민규/2021-10-30-마이크로서비스-아키텍처를-모노레포로-관리하기.md
+          - 3기/구민규/2021-11-07-react에서-side-effect-관리하기.md
+          - 3기/구민규/2021-11-17-컴포넌트-응집도.md
+          - 3기/구민규/2021-11-22-fp-errorhandling.md
+      - 성승익:
+          - 3기/성승익/2021-10-31-how-to-use-awk.md
+          - 3기/성승익/2021-11-07-RAID.md
+          - 3기/성승익/2021-11-22-elastic-stack.md
+      - 이태현:
+          - 3기/이태현/2021-10-31-fastapi-and-sqlmodel-4.md
+      - 정선미:
+          - 3기/정선미/2021-10-31-useCallback-useMemo-useEffect.md
+          - 3기/정선미/2021-11-07-React-immer를-통한-불변성-유지.md
+          - 3기/정선미/2021-11-14-JS-비동기-콜백함수-Promise-async-await.md
+  - 4기:
+      - 김민철:
+          - 4기/김민철/2021-12-22-트랜잭션 알아보기.md
+          - 4기/김민철/2022-01-10-영속성 컨텍스트 알아보기.md
+      - 성승익:
+          - 4기/성승익/2021-12-19-엘라스틱서치의 구성요소들.md
+          - 4기/성승익/2022-01-09-엘라스틱서치 설치 및 CRUD.md
+      - 이지영:
+          - 4기/이지영/2021-12-19-crontab으로-작업-예약하기.md
+      - 이태현:
+          - 4기/이태현/2021-12-19-python-standard-library-asyncio-for-concurrency.md
+          - 4기/이태현/2022-01-09-python-method-resolution-order.md
+      - 정선미:
+          - 4기/정선미/2021-12-19-TS-타입스크립트를-쓰는-이유.md
+          - 4기/정선미/2022-01-08-JS-Closure.md
 
 extra:
   analytics:
@@ -147,8 +144,8 @@ extra:
     property: G-ZL5K1KVSWQ
 
 extra_css:
-- css/termynal.css
-- css/custom.css
+  - css/termynal.css
+  - css/custom.css
 extra_javascript:
-- js/termynal.js
-- js/custom.js  
+  - js/termynal.js
+  - js/custom.js
