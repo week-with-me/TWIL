@@ -43,7 +43,7 @@ TWIL은 이러한 TWIT에서 영감을 받아 시작하게 됐어요.
 |1기|2021. 07. 04 - 2021. 08. 08|[성승익](https://github.com/iksflow), [신태범](https://github.com/TaeBeomShin), [이동근](https://github.com/gledong12), [이태현](https://weekwith.me), [정선미](https://github.com/katej927)|
 |2기|2021. 08. 30 - 2021. 10. 13|[성승익](https://github.com/iksflow), [이태현](https://weekwith.me), [정선미](https://github.com/katej927)|
 |3기|2021. 11. 03 - 2021. 11. 24|[구민규](https://github.com/kooku94), [성승익](https://github.com/iksflow), [이태현](https://weekwith.me), [정선미](https://github.com/katej927)|
-|4기|2021. 12. 15 - ||
+|4기|2021. 12. 15 - 진행 중|[김민철]() [성승익](https://github.com/iksflow), [이지영](), [이태현](https://weekwith.me), [정선미](https://github.com/katej927)|
 
 ---
 
@@ -55,3 +55,4 @@ TWIL은 이러한 TWIT에서 영감을 받아 시작하게 됐어요.
 |이태현|2021. 10. 14. 목요일|3기 멤버 추가|
 |이태현|2021. 10. 29. 금요일|깃헙 블로그 전환|
 |이태현|2021. 12. 02. 목요일|3기 종료 일자 추가|
+|이태현|2021. 12. 22. 수요일|4기 멤버 추가|
