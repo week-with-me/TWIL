@@ -1,6 +1,6 @@
 ---
 title: "Rails로 알아보는 N+1 쿼리 문제와 해결 방법"
-description: "Rails로 알아보는 N+1 쿼리 문제와 해결 방법
+description: "Rails로 알아보는 N+1 쿼리 문제와 해결 방법"
 author: "성승익"
 date: "2022-01-23"
 ---
