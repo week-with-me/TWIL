@@ -1,0 +1,2800 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="동시성 작업을 위한 파이썬의 비동기 라이브러리 Asyncio">
+      
+      
+      
+        <meta name="author" content="이태현">
+      
+      
+        <link rel="canonical" href="https://twil.weekwith.me/4%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-12-19-python-standard-library-asyncio-for-concurrency/">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>동시성 작업을 위한 파이썬의 비동기 라이브러리 Asyncio - TWIL</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../css/termynal.css">
+    
+      <link rel="stylesheet" href="../../../css/custom.css">
+    
+    
+      
+
+  
+
+
+  
+
+  
+
+
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-ZL5K1KVSWQ"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-ZL5K1KVSWQ",{page_path:t.pathname})})})</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZL5K1KVSWQ"></script>
+
+
+    
+    
+  <meta property="robots" content="index, follow" />
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#asyncio" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="TWIL" class="md-header__button md-logo" aria-label="TWIL" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TWIL
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              동시성 작업을 위한 파이썬의 비동기 라이브러리 Asyncio
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/week-with-me/TWIL" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        About TWIL
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../1%EA%B8%B0/%EB%B0%95%EC%A7%80%EC%97%B0/2021-07-11-TypeScript%EC%9D%98-%EA%B8%B0%EC%B4%88/" class="md-tabs__link">
+        1기
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../2%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-09-05-%EB%82%B4%EA%B0%80-%ED%84%B0%EB%AF%B8%EB%84%90%EA%B3%BC-%EC%B9%9C%ED%95%B4%EC%A7%80%EB%A0%A4%EB%8A%94-%EC%9D%B4%EC%9C%A0/" class="md-tabs__link">
+        2기
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../3%EA%B8%B0/%EA%B5%AC%EB%AF%BC%EA%B7%9C/2021-10-30-%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EB%A5%BC-%EB%AA%A8%EB%85%B8%EB%A0%88%ED%8F%AC%EB%A1%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0/" class="md-tabs__link">
+        3기
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../%EA%B9%80%EB%AF%BC%EC%B2%A0/2021-12-22-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%20%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0/" class="md-tabs__link md-tabs__link--active">
+        4기
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="TWIL" class="md-nav__button md-logo" aria-label="TWIL" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    TWIL
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/week-with-me/TWIL" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          About TWIL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="About TWIL" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          About TWIL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        TWIL 소개
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../writing-guideline/" class="md-nav__link">
+        활동 가이드라인
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guideline/" class="md-nav__link">
+        풀 리퀘스트 및 마크다운 가이드라인
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          1기
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="1기" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          1기
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          박지연
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="박지연" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          박지연
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EB%B0%95%EC%A7%80%EC%97%B0/2021-07-11-TypeScript%EC%9D%98-%EA%B8%B0%EC%B4%88/" class="md-nav__link">
+        Typescript의 기초
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EB%B0%95%EC%A7%80%EC%97%B0/2021-07-18-javascript-%EB%B3%80%EC%88%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85/" class="md-nav__link">
+        javascript 변수, 데이터 타입
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          성승익
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="성승익" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          성승익
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-07-11-Ruby-on-rails%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C/" class="md-nav__link">
+        Ruby on rails를 알아봅시다!
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-07-18-Rails%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EC%9E%90-%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC/" class="md-nav__link">
+        Rails로 간단한 게시판을 만들어보자 - 컨트롤러
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-07-25-Rails%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EC%9E%90-%EB%AA%A8%EB%8D%B8-1/" class="md-nav__link">
+        Rails로 간단한 게시판을 만들어보자 - 모델 1편
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-08-01-Rails%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EC%9E%90-%EB%AA%A8%EB%8D%B8-2/" class="md-nav__link">
+        Rails로 간단한 게시판을 만들어보자 - 모델 2편
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          신태범
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="신태범" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          신태범
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%8B%A0%ED%83%9C%EB%B2%94/2021-07-11-CS-%ED%95%98%EB%A9%B4-%EC%83%9D%EA%B8%B0%EB%8A%94-%EC%9D%BC/" class="md-nav__link">
+        [CS] ...하면 생기는 일
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%8B%A0%ED%83%9C%EB%B2%94/2021-07-18-CS-HTTP-1-vs-HTTP2/" class="md-nav__link">
+        [CS] HTTP1.1 vs HTTP2.0
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%8B%A0%ED%83%9C%EB%B2%94/2021-07-25-CS-SQL-vs-NOSQL/" class="md-nav__link">
+        [CS] SQL vs NOSQL
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          이동근
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이동근" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          이동근
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EB%8F%99%EA%B7%BC/2021-07-11-CS-%EB%A9%B4%EC%A0%91-%EC%A4%80%EB%B9%84-%EB%B0%8F-%EC%9E%90%EA%B8%B0%EC%86%8C%EA%B0%9C/" class="md-nav__link">
+        면접 준비 자기소개 및 개인적인 cs 지식 정리
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EB%8F%99%EA%B7%BC/2021-07-18-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/" class="md-nav__link">
+        자바스크립트
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EB%8F%99%EA%B7%BC/2021-07-25-%EB%85%B8%EB%93%9C%EC%99%80-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/" class="md-nav__link">
+        노드와 자바스크립트
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EB%8F%99%EA%B7%BC/2021-08-08-node-CRUD-and-%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D-%EB%94%A5%EB%9F%AC%EB%8B%9D/" class="md-nav__link">
+        [node] C.R.U.D + 간단한 머신러닝 딥러닝
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          이종호
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이종호" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          이종호
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-11-Introduce/" class="md-nav__link">
+        TS Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-11-BasicType/" class="md-nav__link">
+        TS Basic Type
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-11-%ED%83%80%EC%9E%85%EC%B6%94%EB%A1%A0-%ED%83%80%EC%9E%85%EB%8B%A8%EC%96%B8/" class="md-nav__link">
+        TS 타입 추론과 타입 단언
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-11-redux/" class="md-nav__link">
+        Redux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-18-js-oop/" class="md-nav__link">
+        JS OOP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-18-ts-%EA%B8%B0%EB%B3%B8%ED%83%80%EC%9E%85/" class="md-nav__link">
+        TS 기본타입
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EC%A2%85%ED%98%B8/2021-08-08-TS-refact-legacy1/" class="md-nav__link">
+        TS Refact Legacy1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%EC%A2%85%ED%98%B8/2021-08-08-TS-refact-legacy2/" class="md-nav__link">
+        TS Refact Legacy2
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_6">
+          이태현
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이태현" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          이태현
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-07-04-%EC%98%A4%EB%A6%AC%EC%97%94%ED%85%8C%EC%9D%B4%EC%85%98-%EB%B0%8F-Git-%EC%82%AC%EC%9A%A9%EB%B2%95/" class="md-nav__link">
+        오리엔테이션 및 Git 사용법
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-07-11-%EC%A7%84%EB%B2%95%EA%B3%BC-%EC%9E%90%EB%B0%94%EC%9D%98-%EB%B3%80%EC%88%98-%EB%A9%94%EB%AA%A8%EB%A6%AC/" class="md-nav__link">
+        진법과 자바의 변수, 메모리
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-07-18-%EC%9E%90%EB%B0%94%EC%9D%98-%EC%97%B0%EC%82%B0%EC%9E%90/" class="md-nav__link">
+        자바의 연산자
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" type="checkbox" id="__nav_2_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7">
+          이희진
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이희진" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_7">
+          <span class="md-nav__icon md-icon"></span>
+          이희진
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%9D%B4%ED%9D%AC%EC%A7%84/2021-08-08-%EC%9D%B8%ED%84%B0%EB%84%B7%EA%B3%BC-%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C/" class="md-nav__link">
+        인터넷과 프로토콜
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" type="checkbox" id="__nav_2_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_8">
+          정선미
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="정선미" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_8">
+          <span class="md-nav__icon md-icon"></span>
+          정선미
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-07-11-CS-%EA%B0%9D%EC%B2%B4-%EC%A7%80%ED%96%A5-%EA%B8%B0%EB%B2%95/" class="md-nav__link">
+        [CS] 객체 지향 기법
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-07-18-Redux-Basics/" class="md-nav__link">
+        [Redux] Redux Basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-07-25-Redux-Basics-2/" class="md-nav__link">
+        리액트 app에 리덕스 적용
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-08-01-redux-actions-and-immer/" class="md-nav__link">
+        Redux-actions & immer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          2기
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="2기" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          2기
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          성승익
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="성승익" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          성승익
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-09-05-%EB%82%B4%EA%B0%80-%ED%84%B0%EB%AF%B8%EB%84%90%EA%B3%BC-%EC%B9%9C%ED%95%B4%EC%A7%80%EB%A0%A4%EB%8A%94-%EC%9D%B4%EC%9C%A0/" class="md-nav__link">
+        내가 터미널과 친해지려는 이유
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-09-12-grep%EC%9C%BC%EB%A1%9C-%EC%9B%90%ED%95%98%EB%8A%94-%EB%82%B4%EC%9A%A9%EC%9D%84-%EA%B2%80%EC%83%89%ED%95%B4%EB%B3%B4%EC%9E%90%21/" class="md-nav__link">
+        grep으로 원하는 내용을 검색해보자!
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-09-21-find%EB%A1%9C-%EC%9B%90%ED%95%98%EB%8A%94-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EC%B0%BE%EC%95%84%EB%B3%B4%EC%9E%90-1/" class="md-nav__link">
+        find로 원하는 파일을 찾아보자! (1)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-10-03-find%EB%A1%9C-%EC%9B%90%ED%95%98%EB%8A%94-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EC%B0%BE%EC%95%84%EB%B3%B4%EC%9E%90-2/" class="md-nav__link">
+        find로 원하는 파일을 찾아보자! (2)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          이태현
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이태현" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          이태현
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-09-05-fastapi-and-sqlmodel-1/" class="md-nav__link">
+        [ 공식 문서로 배우는 FastAPI & SQLModel ] 01. FastAPI 소개
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-09-14-fastapi-and-sqlmodel-2/" class="md-nav__link">
+        [ 공식 문서로 배우는 FastAPI & SQLModel ] 02. FastAPI 설치와 웹 애플리케이션 서버
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-09-19-fastapi-and-sqlmodel-3/" class="md-nav__link">
+        [ 공식 문서로 배우는 FastAPI & SQLModel ] 03. 클라이언트와 서버, URL과 도메인, API와 엔드포인트, 그리고 HTTP 통신
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          정선미
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="정선미" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          정선미
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-09-05-javascript-01/" class="md-nav__link">
+        Javascript 01 | 데이터 타입 (종류 / 배경지식)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-09-12-javascript-02/" class="md-nav__link">
+        Javascript 02 | 데이터 타입 (변수 선언 / 데이터 할당)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-09-20-redux-middleware-01/" class="md-nav__link">
+        Redux-middleware 01 | 개요 (필요한 경우 / 작업 환경 준비)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-10-03-cs-osi-7-layers/" class="md-nav__link">
+        CS | OSI 7 layers
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          3기
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="3기" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          3기
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          구민규
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="구민규" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          구민규
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EA%B5%AC%EB%AF%BC%EA%B7%9C/2021-10-30-%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EB%A5%BC-%EB%AA%A8%EB%85%B8%EB%A0%88%ED%8F%AC%EB%A1%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0/" class="md-nav__link">
+        마이크로서비스 아키텍처를 모노레포로 관리하기
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EA%B5%AC%EB%AF%BC%EA%B7%9C/2021-11-07-react%EC%97%90%EC%84%9C-side-effect-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0/" class="md-nav__link">
+        react에서 side effect 관리하기
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EA%B5%AC%EB%AF%BC%EA%B7%9C/2021-11-17-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%91%EC%A7%91%EB%8F%84/" class="md-nav__link">
+        컴포넌트 응집도
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EA%B5%AC%EB%AF%BC%EA%B7%9C/2021-11-22-fp-errorhandling/" class="md-nav__link">
+        함수형 프로그래밍으로 에러 핸들링하기
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          성승익
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="성승익" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          성승익
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-10-31-how-to-use-awk/" class="md-nav__link">
+        awk로 표 형식의 데이터를 쉽게 가공해보자!
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-11-07-RAID/" class="md-nav__link">
+        RAID
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-11-22-elastic-stack/" class="md-nav__link">
+        엘라스틱 서치와 엘라스틱 스택
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          이태현
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이태현" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          이태현
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-10-31-fastapi-and-sqlmodel-4/" class="md-nav__link">
+        [ 공식 문서로 배우는 FastAPI & SQLModel ] 04. REST, RESTful API, 그리고 요청 바디를 통한 게시글 작성
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          정선미
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="정선미" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          정선미
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-10-31-useCallback-useMemo-useEffect/" class="md-nav__link">
+        React | useCallback vs useMemo vs useEffect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-11-07-React-immer%EB%A5%BC-%ED%86%B5%ED%95%9C-%EB%B6%88%EB%B3%80%EC%84%B1-%EC%9C%A0%EC%A7%80/" class="md-nav__link">
+        React | immer를 통한 불변성 유지
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-11-14-JS-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%BD%9C%EB%B0%B1%ED%95%A8%EC%88%98-Promise-async-await/" class="md-nav__link">
+        JavaScript | 비동기 (콜백 함수, Promise, async/await)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          4기
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="4기" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          4기
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_1">
+          김민철
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="김민철" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          김민철
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EA%B9%80%EB%AF%BC%EC%B2%A0/2021-12-22-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%20%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0/" class="md-nav__link">
+        트랜잭션 알아보기
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EA%B9%80%EB%AF%BC%EC%B2%A0/2022-01-10-%EC%98%81%EC%86%8D%EC%84%B1%20%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%20%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0/" class="md-nav__link">
+        영속성 컨텍스트 알아보기
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EA%B9%80%EB%AF%BC%EC%B2%A0/2022-01-26-%ED%94%8C%EB%9F%AC%EC%8B%9C%28flush%29-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0/" class="md-nav__link">
+        플러시(flush) 알아보기
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2">
+          성승익
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="성승익" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          성승익
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-12-19-%EC%97%98%EB%9D%BC%EC%8A%A4%ED%8B%B1%EC%84%9C%EC%B9%98%EC%9D%98%20%EA%B5%AC%EC%84%B1%EC%9A%94%EC%86%8C%EB%93%A4/" class="md-nav__link">
+        ES7 - 엘라스틱서치의 구성요소
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%84%B1%EC%8A%B9%EC%9D%B5/2022-01-09-%EC%97%98%EB%9D%BC%EC%8A%A4%ED%8B%B1%EC%84%9C%EC%B9%98%20%EC%84%A4%EC%B9%98%20%EB%B0%8F%20CRUD/" class="md-nav__link">
+        엘라스틱서치의 설치 및 CRUD 실행 방법
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%84%B1%EC%8A%B9%EC%9D%B5/2022-01-16-N%2B1-query-problem/" class="md-nav__link">
+        N+1 쿼리 문제
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%84%B1%EC%8A%B9%EC%9D%B5/2022-01-23-N%2B1-query-problem-with-rails/" class="md-nav__link">
+        Rails로 알아보는 N+1 쿼리 문제와 해결 방법
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3" type="checkbox" id="__nav_5_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_3">
+          이지영
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이지영" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          이지영
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EC%A7%80%EC%98%81/2021-12-19-crontab%EC%9C%BC%EB%A1%9C-%EC%9E%91%EC%97%85-%EC%98%88%EC%95%BD%ED%95%98%EA%B8%B0/" class="md-nav__link">
+        Crontab으로 작업 예약하기
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EC%A7%80%EC%98%81/2022-01-16-Go%EC%9D%98-%ED%8F%AC%EC%9D%B8%ED%84%B0/" class="md-nav__link">
+        Go의 포인터
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_4" type="checkbox" id="__nav_5_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_4">
+          이태현
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이태현" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          이태현
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          동시성 작업을 위한 파이썬의 비동기 라이브러리 Asyncio
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        동시성 작업을 위한 파이썬의 비동기 라이브러리 Asyncio
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    도입
+  </a>
+  
+    <nav class="md-nav" aria-label="도입">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    동시성과 병렬성
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    예제
+  </a>
+  
+    <nav class="md-nav" aria-label="예제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    코루틴
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    비교
+  </a>
+  
+    <nav class="md-nav" aria-label="비교">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    동기적 처리
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    비동기적 처리
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    결론
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    레퍼런스
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2022-01-09-python-method-resolution-order/" class="md-nav__link">
+        파이썬의 MRO(Method Resolution Order)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2022-01-18-virtualization-hypervisior-and-docker/" class="md-nav__link">
+        가상화와 하이퍼바이저, 그리고 도커
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2022-01-25-typescript-oop-object-oriented-programming/" class="md-nav__link">
+        TypeScript OOP(Object Oriented Programming)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_5" type="checkbox" id="__nav_5_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_5">
+          정선미
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="정선미" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_5">
+          <span class="md-nav__icon md-icon"></span>
+          정선미
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A0%95%EC%84%A0%EB%AF%B8/2021-12-19-TS-%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A5%BC-%EC%93%B0%EB%8A%94-%EC%9D%B4%EC%9C%A0/" class="md-nav__link">
+        TypeScript | 타입스크립트를 쓰는 이유
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A0%95%EC%84%A0%EB%AF%B8/2022-01-08-JS-Closure/" class="md-nav__link">
+        JavaScript | 클로저 (Closure)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A0%95%EC%84%A0%EB%AF%B8/2022-01-15-TS-%EC%97%B0%EC%82%B0%EC%9E%90%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%ED%83%80%EC%9E%85-%EC%A0%95%EC%9D%98/" class="md-nav__link">
+        TypeScript | 연산자를 이용한 타입 정의
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A0%95%EC%84%A0%EB%AF%B8/2022-01-25-JS-Generator/" class="md-nav__link">
+        JavaScript | Generator
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    도입
+  </a>
+  
+    <nav class="md-nav" aria-label="도입">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    동시성과 병렬성
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    예제
+  </a>
+  
+    <nav class="md-nav" aria-label="예제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    코루틴
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    비교
+  </a>
+  
+    <nav class="md-nav" aria-label="비교">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    동기적 처리
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    비동기적 처리
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    결론
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    레퍼런스
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="asyncio">동시성 작업을 위한 파이썬의 비동기 라이브러리 Asyncio<a class="headerlink" href="#asyncio" title="Permanent link">&para;</a></h1>
+<h2 id="_1">도입<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>애플리케이션을 개발하고 나면 속도 문제를 경험하고는 한다. 예를 들어 회원가입을 할 때 이메일 인증을 거쳐야 한다고 가정하면 서버에서 사용자의 이메일로 인증 메일을 보내고 난 뒤에 사용자는 메일 전송이 완료되었으니 확인하라는 메시지를 전달 받게 만들 수 있다. 그러나 만약 대량의 사용자가 한 번에 회원가입을 요청하면 어떻게 될까?</p>
+<p>실제로 회원가입을 할 때 이메일 인증을 받으면 분명히 메일을 보냈다고 했는데 아직 내 메일함에는 도착하지 않았던 상황을 경험한 적 있을 것이다. 이는 메시지 큐(Message Queue)라는 기능을 이용했기 때문에 발생하는 상황이다. 특정 작업을 큐(Queue)에 넣었다가 추후에 한 번에 처리하는 방식을 메시지 큐라 한다. 사용자 입장에서는 메일 전송 때까지 얼마나 걸릴 지 모르는 완료 표시를 기다려야 하기 때문에 긍정적인 사용자 경험(UX_User Experience)을 위해서도, 효율적인 작업 처리를 위해서도 필요한 기술이다.</p>
+<p>이처럼 특정 작업을 요청했을 때 해당 작업이 종료될 때까지 기다리지 않고 다른 작업을 하다가 해당 작업이 끝나고 난 이후에 작업을 이어서 하는 걸 <strong>비동기적(Asynchronous)</strong> 작업이라 하고 반대로 요청된 작업이 종료될 때까지 기다렸다가 다른 작업을 수행하는 걸 <strong>동기적(Synchronous)</strong> 작업이라 한다.</p>
+<p>파이썬에서는 이러한 비동기 작업을 위해 제공하는 라이브러리 Asyncio가 있다. 이전 부흥하고 있는 파이썬 웹 프레임워크 FastAPI의 장점 중 하나로 비동기 통신을 구현하기 쉽다는 점을 이야기 했었는데 그 이유는 바로 이 Asyncio 라이브러리 덕분이다.</p>
+<p>Asyncio 라이브러리에 대해 자세히 살펴보기 이전에 헷갈리는 용어를 구별하고 갈 필요가 있다.</p>
+<div class="admonition info">
+<p class="admonition-title">정보</p>
+<p>FastAPI의 경우 정확하게는 Starlette 위에서 작동하는 프레임워크이기 때문에 파이썬 표준 라이브러리인 Asyncio 및 Trio와 완전히 상호운용되는 AnyIO를 바탕으로 하여 비동기 작업이 이루어진다.</p>
+<p>따라서 정확하게 이야기하자면 Asyncio가 아닌 AnyIO 위에서 비동기 작업이 이루어지는 것이다.</p>
+</div>
+<h3 id="_2">동시성과 병렬성<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>보통 속도를 생각하고 애플리케이션을 개발할 때 <strong>동시성(Concurrency)</strong> 및 <strong>병렬성(Paralleism)</strong>이라는 단어를 사용한다. 이때 두 용어는 다른 개념이다. 혼재해서 사용하는 경우가 존재하나 파이썬의 Asyncio 라이브러리를 사용하여 구현하는 비동기 프로그래밍은 병렬성이 아닌 <strong>동시성</strong> 작업을 위한 방법이다.</p>
+<p>쉽게 동시성은 <em>동시에 여러 작업이 처리되는 것처럼 보이는 것</em> 을 의미하고 병렬성은 <em>실제로 동시에 여러 작업이 처리되는 것</em> 을 의미한다. 다시 말해 동시성은 논리적인 개념이고 병렬성은 물리적인 개념이다.</p>
+<p>컴퓨터의 부품 중에서 중앙 처리 장치라 불리는 <strong>CPU(Central Processing Unit)</strong>는 정보를 입력 받고 이를 기억하며 프로그램의 명령어를 해석하여 연산하고 출력하는 역할을 담당한다. 사람으로 치면 뇌에 해당하는 것이다. 이때 CPU에는 <strong>코어(Core)</strong>라는 부품이 탑재되어 있는데 이 코어가 연산을 담당하기 때문에 기본적으로 CPU의 성능을 이야기할 때 코어의 성능, 수를 이야기한다.</p>
+<p>동시성의 경우 단일 코어 내에서 멀티 스레드를 동작시키는 방법을 의미하고 병렬성은 멀티 코어 내에서 멀티 스레드를 동작시키는 방법을 의미한다.</p>
+<div class="admonition warning">
+<p class="admonition-title">주의</p>
+<p>비동기 프로그래밍이 파이썬에서 주목 받는 이유를 알기 위해서는 스레드 및 프로세스 그리고 악명 높은 GIL(Global Interpreter Lock)에 관해 먼저 알아야 한다.</p>
+<p>그러나 해당 개념을 살펴보는데 꽤 오랜 시간이 걸리기 때문에 이는 다음에 더 자세히 살펴보고자 한다. 멀티 스레드 방식이 파이썬에서도 불가능한 건 아니지만 GIL 때문에 생각하는 방향 대로 운용하기가 힘들고 오히려 비효율적인 작업 처리가 될 수 있어서 이에 대한 대안책 중 하나로 비동기 작업 방식을 사용하게 되었다고만 이해하면 된다.</p>
+</div>
+<h2 id="_3">예제<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>간단하게 Asyncio를 확인해보려 한다. 아래 코드 예시를 한 번 살펴보자.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">from_hi_to_bye</span><span class="p">():</span>
+    <span class="k">await</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span><span class="si">}</span><span class="s1"> Hi!&#39;</span><span class="p">)</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="k">await</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span><span class="si">}</span><span class="s1"> Bye!&#39;</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">from_hi_to_bye</span><span class="p">())</span>
+</code></pre></div>
+<p>위 코드를 실행하면 아래와 같은 결괏값을 볼 수 있다.</p>
+<div class="termy">
+    <div class="highlight"><pre><span></span><code>$ python <span class="m">1</span>-example.py
+Sun Dec <span class="m">19</span> <span class="m">18</span>:54:55 <span class="m">2021</span> Hi!
+Sun Dec <span class="m">19</span> <span class="m">18</span>:54:56 <span class="m">2021</span> Bye!
+</code></pre></div>
+
+</div>
+
+<p><code>asyncio</code> 모듈에서 제공하는 <code>run()</code> 함수를 통해 <code>from_hi_to_bye()</code> 함수를 실행하는 예제이다. 이때 <code>from_hi_to_bye()</code> 함수는 <code>async def</code> 함수로 이를 <strong>코루틴(Coroutine)</strong>이라 부른다. <code>async</code> 키워드를 붙여서 비동기 처리를 할 수 있게 만든 함수 내부에서 <code>await</code>키워드를 사용할 수 있는 건 동일한 코루틴 객체, 다시 말해 비동기 함수여야 한다.</p>
+<p>예를 들어 <code>await print()</code>와 같이 <code>print()</code> 함수에 <code>await</code> 키워드를 사용하고 프로그램을 실행하면 <code>object NoneType can't be used in 'await' expression</code>이라는 <code>TypeError</code> 오류가 발생한다. <code>print()</code> 함수는 <code>NoneType</code>을 반환(<code>return</code>)하는 일반 함수이기 때문이다.</p>
+<p>그렇다면 정말 일반적인 함수와 <code>async</code> 키워드를 붙인 함수가 차이가 존재할까?</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_normal_def</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">is_coroutine</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;def: &#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">is_normal_def</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;async def: &#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">is_coroutine</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Call Function&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;def: &#39;</span><span class="p">,</span> <span class="n">is_normal_def</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;async def: &#39;</span><span class="p">,</span> <span class="n">is_coroutine</span><span class="p">())</span>
+</code></pre></div>
+<p>위 코드를 실행하면 아래와 같은 결괏값을 볼 수 있다.</p>
+<div class="termy">
+    <div class="highlight"><pre><span></span><code>$ python <span class="m">2</span>-example.py
+Type
+def:  &lt;class <span class="s1">&#39;function&#39;</span>&gt;
+async def:  &lt;class <span class="s1">&#39;function&#39;</span>&gt;
+
+Call Function
+def:  None
+async def:  &lt;coroutine object is_coroutine at 0x7fecb8bc1ec0&gt;
+</code></pre></div>
+
+</div>
+
+<p>일반 함수인 <code>is_normal_def()</code>의 경우 타입은 <code>function</code>이며 아무 것도 반환하지 않기 때문에 <code>None</code>을 출력한 것을 알 수 있다. 반대로 <code>async</code> 키워드를 붙인 함수 <code>is_coroutine()</code>의 경우 똑같이 타입이 <code>function</code>이지만 <code>coroutine object</code>를 반환한 것을 볼 수 있다.</p>
+<h3 id="_4">코루틴<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><strong>코루틴(Coroutine)</strong>이 무엇인지 정확하게 알 필요가 있다. 코루틴은 루틴이라는 용어 앞에 <strong>코(Co)</strong>가 붙은 것처럼 각 루틴이 대등한 관계로 서로를 순차적으로 호출하는 함수를 의미한다.</p>
+<p>일반적인 함수는 <strong>메인 루틴(Main Routine)</strong>과 <strong>서브 루틴(Sub Routine)</strong>으로 구성되어 메인 루틴이 서브 루틴을 호출하면 서브 루틴의 작업이 완료되고 나서 다시 메인 루틴으로 돌아온다. 이때 서브 루틴에서 사용되는 정보는 서브 루틴 내에서만 존재하기 때문에 해당 서브 루틴이 종료되면 사라진다.</p>
+<p>예를 들어 아래와 같은 기본 함수를 한 번 살펴보자. 이때 메인 루틴은 <code>print()</code> 함수이고 서브 루틴인 <code>num_sum()</code>를 호출하는 형태다.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">num_sum</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">num</span>
+        <span class="k">return</span> <span class="n">total</span>
+
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">num_sum</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">))</span>
+</code></pre></div>
+<p>해당 <code>num_sum()</code> 함수를 <code>for</code> 반복문을 통해 출력해보면 아래와 같다. <code>return</code>에 의해 값을 반환하기 때문에 값이 누적되지 않고 그대로 출력된다.</p>
+<div class="termy">
+    <div class="highlight"><pre><span></span><code>$ python <span class="m">3</span>-example.py
+
+<span class="m">1</span>
+<span class="m">2</span>
+<span class="m">3</span>
+<span class="m">4</span>
+<span class="m">5</span>
+<span class="m">6</span>
+<span class="m">7</span>
+<span class="m">8</span>
+<span class="m">9</span>
+<span class="m">10</span>
+</code></pre></div>
+
+</div>
+
+<p>코루틴은 이와 달리 특정 시점에서 메인 루틴이 다른 루틴을 실행하게 된다. 이는 이전 메인 루틴과 서브 루틴처럼 종속적인 관계가 아닌 대등한 관계로 동작하는 걸 의미한다.</p>
+<p>아래와 같이 <code>yield</code>를 사용하여 코루틴 객체로 만든 <code>coroutine_num_sum()</code> 함수를 살펴보자.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">coroutine_num_sum</span><span class="p">():</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="k">yield</span> <span class="n">total</span><span class="p">)</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">temp</span>
+
+<span class="n">coroutine</span> <span class="o">=</span> <span class="n">coroutine_num_sum</span><span class="p">()</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">coroutine</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">coroutine</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+</code></pre></div>
+<p>해당 <code>coroutine_num_sum()</code> 함수를 <code>for</code> 반복문을 통해 출력해보면 아래와 같다. <code>total</code> 변수의 값이 누적되어 출력되는 것을 확인할 수 있다.</p>
+<div class="termy">
+    <div class="highlight"><pre><span></span><code>$ python <span class="m">4</span>-example.py
+
+<span class="m">1</span>
+<span class="m">3</span>
+<span class="m">6</span>
+<span class="m">10</span>
+<span class="m">15</span>
+<span class="m">21</span>
+<span class="m">28</span>
+<span class="m">36</span>
+<span class="m">45</span>
+<span class="m">55</span>
+</code></pre></div>
+
+</div>
+
+<p>결과적으로 일반적인 함수의 경우 서브 루틴의 종료 이후 메인 루틴이 재실행되기 때문에 <code>total</code> 변수의 값이 완전히 반환된 이후에 <code>print()</code> 함수가 실행되었지만 코루틴의 경우 코루틴이 종료되지 않고 유지되기 때문에 <code>total</code> 변수의 값이 누적되어 <code>print()</code> 함수가 실행되었다.</p>
+<p>그리고 <code>await</code> 키워드를 통해 코루틴 객체에만 접근할 수 있는 이유는 이러한 루틴의 유지 때문이다. 영어 단어의 그 의미처럼 해당 코루틴 객체가 끝날 때까지 기다리라는 의미로 <code>await</code> 키워드가 붙기 때문이다.</p>
+<div class="admonition info">
+<p class="admonition-title">정보</p>
+<p><code>yield</code> 키워드를 활용하여 만든 함수를 제너레이터(Generator) 객체라고 한다. 제너레이터와 코루틴의 차이점은 무엇인지에 관해서는 추후에 살펴보고자 한다.</p>
+<p>일반적인 함수와 제너레이터의 가장 큰 차이는 메모리의 효율성이 있다. 일반적인 함수의 경우 <code>return</code> 키워드를 사용할 때 모든 결괏값을 메모리에 올려야 하는데 제너레이터의 경우 <code>yield</code> 키워드를 통해서 결괏값을 하나씩 메모리에 올려놓기 때문이다.</p>
+<p>이러한 제너레이터의 특성 때문에 제너레이터를 <strong>게으른 반복자(Lazy Iterator)</strong>라고도 부르기도 한다.</p>
+</div>
+<h3 id="_5">비교<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>이제 <code>n</code> 명의 사용자를 한 명씩 조회하는 함수를 동기적 처리하는 방법과 비동기적 처리하는 방법으로 나누어서 생각해보자.</p>
+<h4 id="_6">동기적 처리<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p>아래 예시를 보면 <code>main()</code> 함수에서 세 개의 동기적 처리를 수행한다. </p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">def</span> <span class="nf">find_user_sync</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">명 중 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">번 째 사용자 조회 중 ...&#39;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="n">find_user_sync</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">find_user_sync</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+    <span class="n">find_user_sync</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&gt; </span><span class="si">{</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="si">}</span><span class="s1"> 소요&#39;</span><span class="p">)</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<p><code>time.sleep()</code> 함수에 의해 1초씩 지연이 되기 때문에 결과적으로 아래와 같이 총 15초가 소요된 것을 확인할 수 있다.</p>
+<div class="termy">
+    <div class="highlight"><pre><span></span><code>$ python <span class="m">5</span>-example.py
+
+5명 중 1번 째 사용자 조회 중 ...
+5명 중 2번 째 사용자 조회 중 ...
+5명 중 3번 째 사용자 조회 중 ...
+5명 중 4번 째 사용자 조회 중 ...
+5명 중 5번 째 사용자 조회 중 ...
+7명 중 1번 째 사용자 조회 중 ...
+7명 중 2번 째 사용자 조회 중 ...
+7명 중 3번 째 사용자 조회 중 ...
+7명 중 4번 째 사용자 조회 중 ...
+7명 중 5번 째 사용자 조회 중 ...
+7명 중 6번 째 사용자 조회 중 ...
+7명 중 7번 째 사용자 조회 중 ...
+3명 중 1번 째 사용자 조회 중 ...
+3명 중 2번 째 사용자 조회 중 ...
+3명 중 3번 째 사용자 조회 중 ...
+&gt; <span class="m">15</span>.031453132629395 소요
+</code></pre></div>
+
+</div>
+
+<h4 id="_7">비동기적 처리<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p>아래 예시를 보면 <code>async def</code> 키워드를 활용한 <code>main()</code> 함수에서 세 개의 비동기적 처리를 수행한다.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">find_user_async</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">명 중 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">번 째 사용자 조회 중 ...&#39;</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">([</span>
+        <span class="n">find_user_async</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+        <span class="n">find_user_async</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span>
+        <span class="n">find_user_async</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="p">])</span>
+
+    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&gt; </span><span class="si">{</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="si">}</span><span class="s1"> 소요&#39;</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
+<p><code>asycio.sleep()</code> 함수에 의해 1초씩 지연이 되지만 해당 함수는 <code>time.sleep()</code> 함수와 달리 CPU가 지연되는 시간 동안 놀지 않고 다른 처리를 할 수 있게 해준다.</p>
+<p>또한 <code>asyncio.wait()</code> 함수를 통해 비동기 호출을 스케줄했기 때문에 처리 순서가 실행 순서에 따라 처리되지 않고 실행 시간이 짧은 것 먼저 처리된 것을 확인할 수 있다.</p>
+<p>아래와 같이 총 시간도 절반 정도로 줄어 7초가 소요되었다.</p>
+<div class="termy">
+    <div class="highlight"><pre><span></span><code>$ python <span class="m">6</span>-example.py
+
+7명 중 1번 째 사용자 조회 중 ...
+3명 중 1번 째 사용자 조회 중 ...
+5명 중 1번 째 사용자 조회 중 ...
+7명 중 2번 째 사용자 조회 중 ...
+3명 중 2번 째 사용자 조회 중 ...
+5명 중 2번 째 사용자 조회 중 ...
+7명 중 3번 째 사용자 조회 중 ...
+3명 중 3번 째 사용자 조회 중 ...
+5명 중 3번 째 사용자 조회 중 ...
+7명 중 4번 째 사용자 조회 중 ...
+5명 중 4번 째 사용자 조회 중 ...
+7명 중 5번 째 사용자 조회 중 ...
+5명 중 5번 째 사용자 조회 중 ...
+7명 중 6번 째 사용자 조회 중 ...
+7명 중 7번 째 사용자 조회 중 ...
+&gt; <span class="m">7</span>.003783226013184 소요
+</code></pre></div>
+
+</div>
+
+<h2 id="_8">결론<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>결론적으로 비동기 처리는 실행 순서를 보장 받지 못하지만 빠르게 처리해야 하는 작업을 우선적으로 처리해주면서 CPU가 하나의 작업이 수행될 때까지 기다리지 않고 다른 작업을 처리할 수 있게 해준다.</p>
+<p>순서가 그리 중요하지 않은 경우, 예를 들어 첫 번째로 실행한 사용자가 그대로 첫 번째로 그 결괏값을 받아야 하는 경우가 아닌 이상 비동기 처리는 동기적인 처리보다 훨씬 효율적이며 더욱이 <code>await</code> 키워드를 사용하여 작업이 마무리 될 때까지 기다릴 수도 있기 때문에 잘 활용하면 효율적인 방식을 통해 처리 순서도 보장할 수 있다.</p>
+<h2 id="_9">레퍼런스<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://dojang.io/mod/page/view.php?id=2418">파이썬 코딩 도장: 41.1 코루틴에 값 보내기</a></li>
+<li><a href="https://www.daleseo.com/python-asyncio/">[파이싼] asyncio로 비동기 처리하기</a></li>
+</ul>
+                
+                  
+                
+              
+              
+  
+    <div id="__comments">
+      <hr />
+      <p><strong>작성자</strong>: 이태현</p>
+      <p><strong>작성일</strong>: 2021-12-19</p>
+      <hr />
+      <script src="https://utteranc.es/client.js"
+        repo="week-with-me/TWIL"
+        issue-term="title"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </div>
+  
+
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../%EC%9D%B4%EC%A7%80%EC%98%81/2022-01-16-Go%EC%9D%98-%ED%8F%AC%EC%9D%B8%ED%84%B0/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Go의 포인터" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Go의 포인터
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../2022-01-09-python-method-resolution-order/" class="md-footer__link md-footer__link--next" aria-label="Next: 파이썬의 MRO(Method Resolution Order)" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              파이썬의 MRO(Method Resolution Order)
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["header.autohide", "navigation.tabs", "search.suggest", "search.highlight"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+        <script src="../../../js/termynal.js"></script>
+      
+        <script src="../../../js/custom.js"></script>
+      
+    
+  </body>
+</html>

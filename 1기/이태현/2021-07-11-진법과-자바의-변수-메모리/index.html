@@ -1,0 +1,3135 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="This Week I Learned, TWIL">
+      
+      
+      
+        <meta name="author" content="이태현">
+      
+      
+        <link rel="canonical" href="https://twil.weekwith.me/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-07-11-%EC%A7%84%EB%B2%95%EA%B3%BC-%EC%9E%90%EB%B0%94%EC%9D%98-%EB%B3%80%EC%88%98-%EB%A9%94%EB%AA%A8%EB%A6%AC/">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>진법과 자바의 변수, 메모리 - TWIL</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../css/termynal.css">
+    
+      <link rel="stylesheet" href="../../../css/custom.css">
+    
+    
+      
+
+  
+
+
+  
+
+  
+
+
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-ZL5K1KVSWQ"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-ZL5K1KVSWQ",{page_path:t.pathname})})})</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZL5K1KVSWQ"></script>
+
+
+    
+    
+  <meta property="robots" content="index, follow" />
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="TWIL" class="md-header__button md-logo" aria-label="TWIL" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TWIL
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              진법과 자바의 변수, 메모리
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/week-with-me/TWIL" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        About TWIL
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../%EB%B0%95%EC%A7%80%EC%97%B0/2021-07-11-TypeScript%EC%9D%98-%EA%B8%B0%EC%B4%88/" class="md-tabs__link md-tabs__link--active">
+        1기
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../2%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-09-05-%EB%82%B4%EA%B0%80-%ED%84%B0%EB%AF%B8%EB%84%90%EA%B3%BC-%EC%B9%9C%ED%95%B4%EC%A7%80%EB%A0%A4%EB%8A%94-%EC%9D%B4%EC%9C%A0/" class="md-tabs__link">
+        2기
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../3%EA%B8%B0/%EA%B5%AC%EB%AF%BC%EA%B7%9C/2021-10-30-%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EB%A5%BC-%EB%AA%A8%EB%85%B8%EB%A0%88%ED%8F%AC%EB%A1%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0/" class="md-tabs__link">
+        3기
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../4%EA%B8%B0/%EA%B9%80%EB%AF%BC%EC%B2%A0/2021-12-22-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%20%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0/" class="md-tabs__link">
+        4기
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="TWIL" class="md-nav__button md-logo" aria-label="TWIL" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    TWIL
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/week-with-me/TWIL" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          About TWIL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="About TWIL" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          About TWIL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        TWIL 소개
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../writing-guideline/" class="md-nav__link">
+        활동 가이드라인
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guideline/" class="md-nav__link">
+        풀 리퀘스트 및 마크다운 가이드라인
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          1기
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="1기" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          1기
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          박지연
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="박지연" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          박지연
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%B0%95%EC%A7%80%EC%97%B0/2021-07-11-TypeScript%EC%9D%98-%EA%B8%B0%EC%B4%88/" class="md-nav__link">
+        Typescript의 기초
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%B0%95%EC%A7%80%EC%97%B0/2021-07-18-javascript-%EB%B3%80%EC%88%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85/" class="md-nav__link">
+        javascript 변수, 데이터 타입
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          성승익
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="성승익" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          성승익
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-07-11-Ruby-on-rails%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C/" class="md-nav__link">
+        Ruby on rails를 알아봅시다!
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-07-18-Rails%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EC%9E%90-%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC/" class="md-nav__link">
+        Rails로 간단한 게시판을 만들어보자 - 컨트롤러
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-07-25-Rails%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EC%9E%90-%EB%AA%A8%EB%8D%B8-1/" class="md-nav__link">
+        Rails로 간단한 게시판을 만들어보자 - 모델 1편
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-08-01-Rails%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EC%9E%90-%EB%AA%A8%EB%8D%B8-2/" class="md-nav__link">
+        Rails로 간단한 게시판을 만들어보자 - 모델 2편
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          신태범
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="신태범" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          신태범
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%A0%ED%83%9C%EB%B2%94/2021-07-11-CS-%ED%95%98%EB%A9%B4-%EC%83%9D%EA%B8%B0%EB%8A%94-%EC%9D%BC/" class="md-nav__link">
+        [CS] ...하면 생기는 일
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%A0%ED%83%9C%EB%B2%94/2021-07-18-CS-HTTP-1-vs-HTTP2/" class="md-nav__link">
+        [CS] HTTP1.1 vs HTTP2.0
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%A0%ED%83%9C%EB%B2%94/2021-07-25-CS-SQL-vs-NOSQL/" class="md-nav__link">
+        [CS] SQL vs NOSQL
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          이동근
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이동근" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          이동근
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EB%8F%99%EA%B7%BC/2021-07-11-CS-%EB%A9%B4%EC%A0%91-%EC%A4%80%EB%B9%84-%EB%B0%8F-%EC%9E%90%EA%B8%B0%EC%86%8C%EA%B0%9C/" class="md-nav__link">
+        면접 준비 자기소개 및 개인적인 cs 지식 정리
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EB%8F%99%EA%B7%BC/2021-07-18-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/" class="md-nav__link">
+        자바스크립트
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EB%8F%99%EA%B7%BC/2021-07-25-%EB%85%B8%EB%93%9C%EC%99%80-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/" class="md-nav__link">
+        노드와 자바스크립트
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EB%8F%99%EA%B7%BC/2021-08-08-node-CRUD-and-%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D-%EB%94%A5%EB%9F%AC%EB%8B%9D/" class="md-nav__link">
+        [node] C.R.U.D + 간단한 머신러닝 딥러닝
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          이종호
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이종호" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          이종호
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-11-Introduce/" class="md-nav__link">
+        TS Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-11-BasicType/" class="md-nav__link">
+        TS Basic Type
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-11-%ED%83%80%EC%9E%85%EC%B6%94%EB%A1%A0-%ED%83%80%EC%9E%85%EB%8B%A8%EC%96%B8/" class="md-nav__link">
+        TS 타입 추론과 타입 단언
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-11-redux/" class="md-nav__link">
+        Redux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-18-js-oop/" class="md-nav__link">
+        JS OOP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EC%A2%85%ED%98%B8/2021-07-18-ts-%EA%B8%B0%EB%B3%B8%ED%83%80%EC%9E%85/" class="md-nav__link">
+        TS 기본타입
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EC%A2%85%ED%98%B8/2021-08-08-TS-refact-legacy1/" class="md-nav__link">
+        TS Refact Legacy1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%EC%A2%85%ED%98%B8/2021-08-08-TS-refact-legacy2/" class="md-nav__link">
+        TS Refact Legacy2
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_6">
+          이태현
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이태현" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          이태현
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-07-04-%EC%98%A4%EB%A6%AC%EC%97%94%ED%85%8C%EC%9D%B4%EC%85%98-%EB%B0%8F-Git-%EC%82%AC%EC%9A%A9%EB%B2%95/" class="md-nav__link">
+        오리엔테이션 및 Git 사용법
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          진법과 자바의 변수, 메모리
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        진법과 자바의 변수, 메모리
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2진법
+  </a>
+  
+    <nav class="md-nav" aria-label="2진법">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    덧셈
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    보수
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    음수 표현
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-16" class="md-nav__link">
+    8진법, 16진법
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    진법 변환
+  </a>
+  
+    <nav class="md-nav" aria-label="진법 변환">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-8" class="md-nav__link">
+    2진수를 8진수로 변환
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-16" class="md-nav__link">
+    2진수를 16진수로 변환
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    자바의 변수
+  </a>
+  
+    <nav class="md-nav" aria-label="자바의 변수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable" class="md-nav__link">
+    변수 (Variable)
+  </a>
+  
+    <nav class="md-nav" aria-label="변수 (Variable)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    정의
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    선언과 초기화
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convention" class="md-nav__link">
+    명명규칙 및 컨벤션 (Convention)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    기타
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    변수의 타입
+  </a>
+  
+    <nav class="md-nav" aria-label="변수의 타입">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    값의 종류
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primitive-type" class="md-nav__link">
+    기본형 (Primitive Type)
+  </a>
+  
+    <nav class="md-nav" aria-label="기본형 (Primitive Type)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#boolean" class="md-nav__link">
+    논리형 ( boolean )
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#char" class="md-nav__link">
+    문자형 ( char )
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#byte-short-int-long" class="md-nav__link">
+    정수형 ( byte , short , int , long )
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#float-double" class="md-nav__link">
+    실수형 ( float , double )
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    결론
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference-type" class="md-nav__link">
+    참조형 (Reference Type)
+  </a>
+  
+    <nav class="md-nav" aria-label="참조형 (Reference Type)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    메모리와 데이터
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    기본값
+  </a>
+  
+    <nav class="md-nav" aria-label="기본값">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#garbage-value" class="md-nav__link">
+    쓰레기 값 (Garbage Value)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    상수와 리터럴
+  </a>
+  
+    <nav class="md-nav" aria-label="상수와 리터럴">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constant" class="md-nav__link">
+    상수 (Constant)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#literal" class="md-nav__link">
+    리터럴 (Literal)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constant-pool" class="md-nav__link">
+    상수 풀 (Constant Pool)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    타입 변환
+  </a>
+  
+    <nav class="md-nav" aria-label="타입 변환">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-promotion" class="md-nav__link">
+    자동 형변환 (Type Promotion)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-casting" class="md-nav__link">
+    강제 형변환 (Type Casting)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    기타
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-inference" class="md-nav__link">
+    타입 추론 (Type Inference)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-07-18-%EC%9E%90%EB%B0%94%EC%9D%98-%EC%97%B0%EC%82%B0%EC%9E%90/" class="md-nav__link">
+        자바의 연산자
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" type="checkbox" id="__nav_2_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_7">
+          이희진
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이희진" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_7">
+          <span class="md-nav__icon md-icon"></span>
+          이희진
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%9D%B4%ED%9D%AC%EC%A7%84/2021-08-08-%EC%9D%B8%ED%84%B0%EB%84%B7%EA%B3%BC-%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C/" class="md-nav__link">
+        인터넷과 프로토콜
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" type="checkbox" id="__nav_2_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_8">
+          정선미
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="정선미" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_8">
+          <span class="md-nav__icon md-icon"></span>
+          정선미
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A0%95%EC%84%A0%EB%AF%B8/2021-07-11-CS-%EA%B0%9D%EC%B2%B4-%EC%A7%80%ED%96%A5-%EA%B8%B0%EB%B2%95/" class="md-nav__link">
+        [CS] 객체 지향 기법
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A0%95%EC%84%A0%EB%AF%B8/2021-07-18-Redux-Basics/" class="md-nav__link">
+        [Redux] Redux Basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A0%95%EC%84%A0%EB%AF%B8/2021-07-25-Redux-Basics-2/" class="md-nav__link">
+        리액트 app에 리덕스 적용
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A0%95%EC%84%A0%EB%AF%B8/2021-08-01-redux-actions-and-immer/" class="md-nav__link">
+        Redux-actions & immer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          2기
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="2기" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          2기
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          성승익
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="성승익" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          성승익
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-09-05-%EB%82%B4%EA%B0%80-%ED%84%B0%EB%AF%B8%EB%84%90%EA%B3%BC-%EC%B9%9C%ED%95%B4%EC%A7%80%EB%A0%A4%EB%8A%94-%EC%9D%B4%EC%9C%A0/" class="md-nav__link">
+        내가 터미널과 친해지려는 이유
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-09-12-grep%EC%9C%BC%EB%A1%9C-%EC%9B%90%ED%95%98%EB%8A%94-%EB%82%B4%EC%9A%A9%EC%9D%84-%EA%B2%80%EC%83%89%ED%95%B4%EB%B3%B4%EC%9E%90%21/" class="md-nav__link">
+        grep으로 원하는 내용을 검색해보자!
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-09-21-find%EB%A1%9C-%EC%9B%90%ED%95%98%EB%8A%94-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EC%B0%BE%EC%95%84%EB%B3%B4%EC%9E%90-1/" class="md-nav__link">
+        find로 원하는 파일을 찾아보자! (1)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-10-03-find%EB%A1%9C-%EC%9B%90%ED%95%98%EB%8A%94-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EC%B0%BE%EC%95%84%EB%B3%B4%EC%9E%90-2/" class="md-nav__link">
+        find로 원하는 파일을 찾아보자! (2)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          이태현
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이태현" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          이태현
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-09-05-fastapi-and-sqlmodel-1/" class="md-nav__link">
+        [ 공식 문서로 배우는 FastAPI & SQLModel ] 01. FastAPI 소개
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-09-14-fastapi-and-sqlmodel-2/" class="md-nav__link">
+        [ 공식 문서로 배우는 FastAPI & SQLModel ] 02. FastAPI 설치와 웹 애플리케이션 서버
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-09-19-fastapi-and-sqlmodel-3/" class="md-nav__link">
+        [ 공식 문서로 배우는 FastAPI & SQLModel ] 03. 클라이언트와 서버, URL과 도메인, API와 엔드포인트, 그리고 HTTP 통신
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          정선미
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="정선미" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          정선미
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-09-05-javascript-01/" class="md-nav__link">
+        Javascript 01 | 데이터 타입 (종류 / 배경지식)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-09-12-javascript-02/" class="md-nav__link">
+        Javascript 02 | 데이터 타입 (변수 선언 / 데이터 할당)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-09-20-redux-middleware-01/" class="md-nav__link">
+        Redux-middleware 01 | 개요 (필요한 경우 / 작업 환경 준비)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-10-03-cs-osi-7-layers/" class="md-nav__link">
+        CS | OSI 7 layers
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          3기
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="3기" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          3기
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          구민규
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="구민규" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          구민규
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EA%B5%AC%EB%AF%BC%EA%B7%9C/2021-10-30-%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EB%A5%BC-%EB%AA%A8%EB%85%B8%EB%A0%88%ED%8F%AC%EB%A1%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0/" class="md-nav__link">
+        마이크로서비스 아키텍처를 모노레포로 관리하기
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EA%B5%AC%EB%AF%BC%EA%B7%9C/2021-11-07-react%EC%97%90%EC%84%9C-side-effect-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0/" class="md-nav__link">
+        react에서 side effect 관리하기
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EA%B5%AC%EB%AF%BC%EA%B7%9C/2021-11-17-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%9D%91%EC%A7%91%EB%8F%84/" class="md-nav__link">
+        컴포넌트 응집도
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EA%B5%AC%EB%AF%BC%EA%B7%9C/2021-11-22-fp-errorhandling/" class="md-nav__link">
+        함수형 프로그래밍으로 에러 핸들링하기
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          성승익
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="성승익" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          성승익
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-10-31-how-to-use-awk/" class="md-nav__link">
+        awk로 표 형식의 데이터를 쉽게 가공해보자!
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-11-07-RAID/" class="md-nav__link">
+        RAID
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-11-22-elastic-stack/" class="md-nav__link">
+        엘라스틱 서치와 엘라스틱 스택
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          이태현
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이태현" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          이태현
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-10-31-fastapi-and-sqlmodel-4/" class="md-nav__link">
+        [ 공식 문서로 배우는 FastAPI & SQLModel ] 04. REST, RESTful API, 그리고 요청 바디를 통한 게시글 작성
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          정선미
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="정선미" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          정선미
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-10-31-useCallback-useMemo-useEffect/" class="md-nav__link">
+        React | useCallback vs useMemo vs useEffect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-11-07-React-immer%EB%A5%BC-%ED%86%B5%ED%95%9C-%EB%B6%88%EB%B3%80%EC%84%B1-%EC%9C%A0%EC%A7%80/" class="md-nav__link">
+        React | immer를 통한 불변성 유지
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-11-14-JS-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%BD%9C%EB%B0%B1%ED%95%A8%EC%88%98-Promise-async-await/" class="md-nav__link">
+        JavaScript | 비동기 (콜백 함수, Promise, async/await)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          4기
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="4기" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          4기
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_1">
+          김민철
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="김민철" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          김민철
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EA%B9%80%EB%AF%BC%EC%B2%A0/2021-12-22-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%20%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0/" class="md-nav__link">
+        트랜잭션 알아보기
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EA%B9%80%EB%AF%BC%EC%B2%A0/2022-01-10-%EC%98%81%EC%86%8D%EC%84%B1%20%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%20%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0/" class="md-nav__link">
+        영속성 컨텍스트 알아보기
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EA%B9%80%EB%AF%BC%EC%B2%A0/2022-01-26-%ED%94%8C%EB%9F%AC%EC%8B%9C%28flush%29-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0/" class="md-nav__link">
+        플러시(flush) 알아보기
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2">
+          성승익
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="성승익" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          성승익
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2021-12-19-%EC%97%98%EB%9D%BC%EC%8A%A4%ED%8B%B1%EC%84%9C%EC%B9%98%EC%9D%98%20%EA%B5%AC%EC%84%B1%EC%9A%94%EC%86%8C%EB%93%A4/" class="md-nav__link">
+        ES7 - 엘라스틱서치의 구성요소
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2022-01-09-%EC%97%98%EB%9D%BC%EC%8A%A4%ED%8B%B1%EC%84%9C%EC%B9%98%20%EC%84%A4%EC%B9%98%20%EB%B0%8F%20CRUD/" class="md-nav__link">
+        엘라스틱서치의 설치 및 CRUD 실행 방법
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2022-01-16-N%2B1-query-problem/" class="md-nav__link">
+        N+1 쿼리 문제
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%84%B1%EC%8A%B9%EC%9D%B5/2022-01-23-N%2B1-query-problem-with-rails/" class="md-nav__link">
+        Rails로 알아보는 N+1 쿼리 문제와 해결 방법
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3" type="checkbox" id="__nav_5_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_3">
+          이지영
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이지영" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          이지영
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%9D%B4%EC%A7%80%EC%98%81/2021-12-19-crontab%EC%9C%BC%EB%A1%9C-%EC%9E%91%EC%97%85-%EC%98%88%EC%95%BD%ED%95%98%EA%B8%B0/" class="md-nav__link">
+        Crontab으로 작업 예약하기
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%9D%B4%EC%A7%80%EC%98%81/2022-01-16-Go%EC%9D%98-%ED%8F%AC%EC%9D%B8%ED%84%B0/" class="md-nav__link">
+        Go의 포인터
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_4" type="checkbox" id="__nav_5_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_4">
+          이태현
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="이태현" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          이태현
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2021-12-19-python-standard-library-asyncio-for-concurrency/" class="md-nav__link">
+        동시성 작업을 위한 파이썬의 비동기 라이브러리 Asyncio
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2022-01-09-python-method-resolution-order/" class="md-nav__link">
+        파이썬의 MRO(Method Resolution Order)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2022-01-18-virtualization-hypervisior-and-docker/" class="md-nav__link">
+        가상화와 하이퍼바이저, 그리고 도커
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/2022-01-25-typescript-oop-object-oriented-programming/" class="md-nav__link">
+        TypeScript OOP(Object Oriented Programming)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_5" type="checkbox" id="__nav_5_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_5">
+          정선미
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="정선미" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_5">
+          <span class="md-nav__icon md-icon"></span>
+          정선미
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2021-12-19-TS-%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A5%BC-%EC%93%B0%EB%8A%94-%EC%9D%B4%EC%9C%A0/" class="md-nav__link">
+        TypeScript | 타입스크립트를 쓰는 이유
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2022-01-08-JS-Closure/" class="md-nav__link">
+        JavaScript | 클로저 (Closure)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2022-01-15-TS-%EC%97%B0%EC%82%B0%EC%9E%90%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%ED%83%80%EC%9E%85-%EC%A0%95%EC%9D%98/" class="md-nav__link">
+        TypeScript | 연산자를 이용한 타입 정의
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4%EA%B8%B0/%EC%A0%95%EC%84%A0%EB%AF%B8/2022-01-25-JS-Generator/" class="md-nav__link">
+        JavaScript | Generator
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2진법
+  </a>
+  
+    <nav class="md-nav" aria-label="2진법">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    덧셈
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    보수
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    음수 표현
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-16" class="md-nav__link">
+    8진법, 16진법
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    진법 변환
+  </a>
+  
+    <nav class="md-nav" aria-label="진법 변환">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-8" class="md-nav__link">
+    2진수를 8진수로 변환
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-16" class="md-nav__link">
+    2진수를 16진수로 변환
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    자바의 변수
+  </a>
+  
+    <nav class="md-nav" aria-label="자바의 변수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable" class="md-nav__link">
+    변수 (Variable)
+  </a>
+  
+    <nav class="md-nav" aria-label="변수 (Variable)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    정의
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    선언과 초기화
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convention" class="md-nav__link">
+    명명규칙 및 컨벤션 (Convention)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    기타
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    변수의 타입
+  </a>
+  
+    <nav class="md-nav" aria-label="변수의 타입">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    값의 종류
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primitive-type" class="md-nav__link">
+    기본형 (Primitive Type)
+  </a>
+  
+    <nav class="md-nav" aria-label="기본형 (Primitive Type)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#boolean" class="md-nav__link">
+    논리형 ( boolean )
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#char" class="md-nav__link">
+    문자형 ( char )
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#byte-short-int-long" class="md-nav__link">
+    정수형 ( byte , short , int , long )
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#float-double" class="md-nav__link">
+    실수형 ( float , double )
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    결론
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference-type" class="md-nav__link">
+    참조형 (Reference Type)
+  </a>
+  
+    <nav class="md-nav" aria-label="참조형 (Reference Type)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    메모리와 데이터
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    기본값
+  </a>
+  
+    <nav class="md-nav" aria-label="기본값">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#garbage-value" class="md-nav__link">
+    쓰레기 값 (Garbage Value)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    상수와 리터럴
+  </a>
+  
+    <nav class="md-nav" aria-label="상수와 리터럴">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constant" class="md-nav__link">
+    상수 (Constant)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#literal" class="md-nav__link">
+    리터럴 (Literal)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constant-pool" class="md-nav__link">
+    상수 풀 (Constant Pool)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    타입 변환
+  </a>
+  
+    <nav class="md-nav" aria-label="타입 변환">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-promotion" class="md-nav__link">
+    자동 형변환 (Type Promotion)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-casting" class="md-nav__link">
+    강제 형변환 (Type Casting)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    기타
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-inference" class="md-nav__link">
+    타입 추론 (Type Inference)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="_1">진법과 자바의 변수, 메모리<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="2">2진법<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h3 id="_2">덧셈<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>우리가 흔히 실생활에서 사용 중인 10진법과 마찬가지로 <strong>오른쪽(LSB__Least Significant Bits)에서 왼쪽(MSB__Most Significat Bits)으로 자릿수에 맞춰서 더해주면 된다.</strong>  </p>
+<p>아래 이미지는 <code>0</code> 과 <code>1</code> 두 수로 만들 수 있는 <strong>합산 결괏값인 Sum과 그에 대한 버림인 Carry</strong> 를 표현한 것이다. 이때 나중에 살펴보겠지만 <code>1</code> 과 <code>1</code> 같이 더해서 <strong>Carry가 발생하는 경우를 자릿수가 넘쳐 버려졌기 때문에 오버플로우라 한다.</strong>  </p>
+<p>여기서 중요한 점은 <strong>Sum은 XOR 게이트, Carry는 AND 게이트</strong> 를 통해 구할 수 있다는 것이다. XOR 게이트란 <code>true</code> 의 개수가 홀수일 때 <code>true</code> , 그 외에는 <code>false</code> 를 반환하는 논리 연산을 의미하며 AND 게이트란 모두 <code>true</code> 일 때 <code>true</code> , 그 외에는 <code>false</code> 를 반환하는 논리 연산을 의미한다. 이처럼 <strong>컴퓨터는 덧셈을 수행할 때 XOR 칩과 AND 칩을 이용하여 Sum과 Carry를 구하게 된다.</strong>  </p>
+<p><img alt="2진법 덧셈" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/1.jpg" /></p>
+<h3 id="_3">보수<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>보수는 더했을 때 <code>n</code> 이 되는 수를 의미한다. 다시 말해 <code>n</code> 의 보수는 곧 더했을 때 <code>n</code> 이 되어야 하기 때문에 <code>2</code> 의 보수는 더해서 <code>2</code> 가 되어야 한다는 의미다. 예를 들어 2진수에서 2의 보수는 <code>0</code> 이 된다는 의미와 같다. </p>
+<p>만약 <code>0101</code> 이라는 10진수로 <code>5</code> 의 값을 갖는 2진수가 있다고 하자. <code>0101</code> 의 2의 보수는 더해서 <code>0000</code> 이 나와야 하는 수, 다시 말해 자리올림이 발생해서 크기로 인해 버려져야 하는 수이기 때문에 <code>1010</code> 이 곧 2의 보수가 된다. 이를 10진법으로 나타내면 <code>0101</code> 의 10진수가 <code>5</code> 이기 때문에 <code>0101</code> 의 2의 보수인 <code>1010</code> 의 10진수는 <code>-5</code> 여야 한다.</p>
+<h3 id="_4">음수 표현<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>이렇게 보수를 통해서 2진법의 음수를 표현하는 방식을 유추할 수 있다. 우선 아래 이미지를 한 번 살펴보자.</p>
+<p>아래 표와 같이 <strong>MSB(Most Significant Bits)인 가장 왼쪽의 비트를 <code>0</code> 일 경우 양수, <code>1</code> 일 경우 음수로 표현</strong> 하여 나타낼 경우 두 가지 문제점이 발생한다. 하나는 <code>0</code> 이 두 번 중복된다는 점이고 그리고 보수를 제대로 표현할 수 없다는 점이다. 예를 들어 10진수로 <code>2</code> 를 나타내는 <code>0010</code> 값과 MSB를 사용한 음수 표현의 10진수 값이 <code>-2</code> 인 <code>1010</code> 을 더하게 되면 <code>1100</code> 으로 결괏값으로 <code>-4</code> 가 나온다.</p>
+<p>이러한 문제점을 해결하기 위해 등장한 것이 <strong>2의 보수를 사용</strong> 하는 방법이다. 2의 보수는 <strong>1의 보수를 구한 다음 그 결괏값에 <code>1</code> 을 더하여 쉽게 구할 수 있다.</strong> 1의 보수는 더해서 <code>1</code> 이 되어야 하는 수를 의미하기 때문에 다시 말해 2진법에서의 1의 보수는 곧 <code>0</code> 을 <code>1</code> 로, <code>1</code> 을 <code>0</code> 으로 바꾸는 걸 의미한다. 따라서 <code>0</code> 과 <code>1</code> 의 수를 서로 바꿔 준다음 <code>1</code> 을 더해주면 쉽게 2진수의 음수 표현을 구할 수 있다. 예를 들어 10진수 <code>7</code> 을 의미하는 2진수 <code>0111</code> 의 음수는 1의 보수를 통해 구한 결괏값인 <code>1000</code> 에 <code>1</code> 을 더한 <code>1001</code> 이 된다. 10진수끼리의 덧셈 또한 <code>0</code> 이 되며 진수끼리의 덧셈 또한 <code>0111</code> 과 <code>1001</code> 의 덧셈이기 때문에 버림으로 인해 <code>0000</code> 이 된다는 걸 알 수 있다.</p>
+<p><img alt="2진법 음수 표현" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/2.jpg" /></p>
+<h2 id="8-16">8진법, 16진법<a class="headerlink" href="#8-16" title="Permanent link">&para;</a></h2>
+<p>컴퓨터에서 2진법으로 값을 표현할 때 64비트 컴퓨터가 레지스터에 값을 표현하려면 자리수가 상당히 길어질 것이다. 따라서 이러한 문제를 보완하기 위해 8진법과 16진법을 사용한다. 8진법의 경우 $0$ 부터 $7$ 까지의 숫자만 있으면 되기 때문에 별다는 기호가 필요하지 않으나 16진법의 경우 $10$ 이부터는 두 자리수이기 때문에 별도의 표현 방식이 필요해서 이를 $A$ 로 표현하여 이후 차례대로 증가하여 최대값인 $15$ 는 $F$ 다.</p>
+<h2 id="_5">진법 변환<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h3 id="2-8">2진수를 8진수로 변환<a class="headerlink" href="#2-8" title="Permanent link">&para;</a></h3>
+<p>쉽게 2진수를 뒤에서부터 3자리씩 끊어서 그에 해당하는 8진수로 바꾸면 된다. $8$ 이라는 값이 $2^3$ 이기 때문에 3자리씩 끊는다.</p>
+<h3 id="2-16">2진수를 16진수로 변환<a class="headerlink" href="#2-16" title="Permanent link">&para;</a></h3>
+<p>8진수와 유사하게 2진수를 뒤에서부터 4자리씩 끊어서 그에 해당하는 16진수로 바꾸면 된다.  $16$ 이라는 값이 $2^4$ 이기 때문에 4자리씩 끊는다.</p>
+<h2 id="_6">자바의 변수<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="variable">변수 (Variable)<a class="headerlink" href="#variable" title="Permanent link">&para;</a></h3>
+<h4 id="_7">정의<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p>변수란, <strong>단 하나의 값을 저장할 수 있는 메모리 공간</strong> 을 의미한다. 따라서 하나의 변수에는 단 하나의 값을 저장할 수 있기 때문에 <strong>새로운 값을 저장하면 기존의 값은 사라진다.</strong>  </p>
+<h4 id="_8">선언과 초기화<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<p>아래 이미지를 보면서 이야기하면 쉽다. <code>int a;</code> 와 같이 변수 <code>a</code> 에 어떤 자료형을 사용할 것인지 말해주는 것이 선언을 의미한다. 그리고 바로 아래 <code>a = 3;</code> 과 같이 실제 값(리터럴)을 할당( <code>=</code> ) 할 때 가장 처음 값을 할당해주는 걸 초기화라고 한다. 그리고 보통은 <code>int b = 4;</code> 와 같이 변수를 선언할 때 초기화를 함께 해준다.</p>
+<p>여기서 유의할 점은 <strong>선언을 통해서 변수 테이블(Symbol Table)에 변수의 이름, 다시 말해 식별자(Identifier)를 지정하고 초기화를 통해 해당 식별자에 값의 주소를 연결</strong> 해주게 되는데 <code>System.out.println(c)</code> 와 같이 만약 선언하지 않아서 테이블에 존재하지 않는 값을 불러올 경우 해당 변수를 찾을 수 없다는 <code>cannot find symbol error</code> 가 발생한다.</p>
+<p><img alt="변수의 선언과 초기화" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/3.png" /></p>
+<h4 id="convention">명명규칙 및 컨벤션 (Convention)<a class="headerlink" href="#convention" title="Permanent link">&para;</a></h4>
+<p><strong>프로그래밍에서 사용하는 모든 이름을 식별자(Identifier)</strong> 라고 한다. 이때 식별자는 같은 영역 내에서 서로 구분될 수 있어야 하기 때문에 아래와 같은 규칙을 지켜야 한다.</p>
+<ol>
+<li>대소문자가 구분되며 길이에 제한이 없다.</li>
+<li>예약어(keyword 또는 reserved word)를 사용해서는 안 된다.</li>
+<li>숫자로 시작해서는 안 된다.</li>
+<li>특수 문자는 <code>_</code> 와 <code>$</code> 만 가능하다.</li>
+</ol>
+<p>또한 권장하는 규칙, 다시 말해 네이밍 컨벤션 또한 아래와 같이 존재한다.</p>
+<ol>
+<li>클래스 이름의 첫 글자는 항상 대문자로 한다. 이때 변수와 메서드 이름의 첫 글자는 항상 소문자로 한다.</li>
+<li>여러 단어로 이루어진 이름은 단어의 첫 글자를 대문자로 한다. ( <strong>카멜 케이스</strong> )</li>
+<li>상수의 이름은 모두 대문자로 하며 여러 단어로 이루어진 경우 <code>_</code> 를 사용해 구분한다.</li>
+</ol>
+<blockquote>
+<p><strong>변수(variable)와 식별자(identifier)를 혼용</strong> 하는 경우가 많다. 변수는 그 정의에서도 알 수 있듯이 하나의 값, 다시 말해 <strong>데이터를 저장하고 또 새로운 값이 저장되면서 변할 수 있는 것</strong> 을 의미한다. 반면 식별자는 이러한 데이터를 단어 그대로 식별하는 데 사용하는 이름, 다시 말해 <strong>변수명</strong> 을 의미한다.</p>
+</blockquote>
+<h4 id="_9">기타<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
+<p><strong>변수의 스코프(Scope)와 라이프타임(Lifetime)</strong> 도 매우 중요한 개념이지만 이에 대해서는 아직 객체에 관해 배우지 않았기 때문에 객체와 메서드 개념을 배우는 객체 지향 프로그래밍 챕터에서 다뤄보고자 한다.</p>
+<h2 id="_10">변수의 타입<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h3 id="_11">값의 종류<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p>값의 종류는 크게 문자와 숫자로 나눌 수 있다. 그리고 다시 숫자는 정수와 실수로 구분이 되는데 이를 간단하게 나타내면 아래 이미지와 같다. 이때 자바의 자료형에서는 문자 자료형인 <code>char</code> , 숫자 자료형 중 정수 자료형인 <code>byte</code> , <code>short</code> , <code>int</code> , <code>long</code> 그리고 실수 자료형인 <code>float</code> , <code>double</code> 이 존재한다.</p>
+<p><img alt="값의 종류" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/4.png" /></p>
+<h3 id="primitive-type">기본형 (Primitive Type)<a class="headerlink" href="#primitive-type" title="Permanent link">&para;</a></h3>
+<p><strong>기본형 변수는 실제 값(data)을 저장한다.</strong> 이때 유의할 점은 자바의 참조형 변수는 상호 간의 연산이 안 되기 때문에 실제 연산에 사용되는 것은 모두 기본형 변수이다.</p>
+<p>기본형의 경우 아래 이미지와 같이 불변하는 값, 다시 말해 <strong>데이터 영역에 저장되어 있는 상수(리터럴)의 주소를 변수가 가리키게 된다.</strong> 변수 <code>a</code> 가 <code>abc</code> 라는 상수 값의 주소인 <code>5004</code> 를 값으로 가리키게 되는 것이다. 그렇기 때문에 실제로 값을 가리키게-저장하게 되기 때문에 다른 변수 <code>b</code> 에 <code>a</code> 를 할당할 경우 똑같이 <code>5004</code> 번의 <strong>주소가 복제</strong> 된다.</p>
+<p><img alt="기본형의 메모리 할당 방법" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/5.png" /></p>
+<h4 id="boolean">논리형 ( <code>boolean</code> )<a class="headerlink" href="#boolean" title="Permanent link">&para;</a></h4>
+<p>논리형은 기본적으로 참( <code>true</code> )과 거짓( <code>false</code> )만 다루면 되기 때문에 1 비트의 크기면 충분하지만 자바에서 데이터를 다루는 최소단위가 바이트이기 때문에 크기가 1 바이트로 지정됐다. 이때 기본값은 <code>false</code> 다. 주의할 점은 자바에서는 대소문자를 구별하기 때문에 <code>True</code> , <code>TRUE</code> , <code>true</code> 모두 다른 값을 의미한다는 점이다.</p>
+<h4 id="char">문자형 ( <code>char</code> )<a class="headerlink" href="#char" title="Permanent link">&para;</a></h4>
+<p>문자형의 크기는 2 바이트다. 따옴표( <code>''</code> )를 사용하여 단 하나의 문자만을 저장한다. 이때 실제로 변수에 저장되는 값은 문자가 아닌 문자의 유니코드(정수)가 저장된다. </p>
+<p>아래 코드 예시를 한 번 살펴보자. <code>char</code> 자료형을 사용하여 <code>65</code> 를 저장했음에도 불구하고 <code>println()</code> 이 <code>ch</code> 변수의 자료형이 문자형이기 때문에 자동으로 유니코드에 의해 <code>A</code> 라는 결괏값을 출력해줬다.</p>
+<p><img alt="문자형" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/6.png" /></p>
+<blockquote>
+<p>잠깐! <strong>유니코드(Unicode)</strong> 란 무엇일까?</p>
+<p><strong>컴퓨터는 결국 이진법으로만, 다시 말해 숫자로만 모든 것을 이해하기 때문에 문자 자체도 숫자로 표현해줘야 한다.</strong> 이때 각 문자에 알맞은 숫자를 정해서 어떤 문자를 사용하면 이를 자동으로 정해진 숫자로 변환하며 컴퓨터가 이해할 수 있게 해주는 표가 바로 유니코드다.</p>
+</blockquote>
+<h4 id="byte-short-int-long">정수형 ( <code>byte</code> , <code>short</code> , <code>int</code> , <code>long</code> )<a class="headerlink" href="#byte-short-int-long" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>byte</code> : 1 바이트의 크기를 가진다.</li>
+<li><code>short</code> : 2 바이트의 크기를 가진다.</li>
+<li><code>int</code> : 4 바이트의 크기를 가진다. <strong>기본 자료형(default data type)</strong> 이다.</li>
+<li><code>long</code> : 8 바이트의 크기를 가진다.</li>
+</ul>
+<p>모든 정수형은 부호가 있기 때문에 <strong>가장 왼쪽의 첫 번째 비트를 부호 비트(sign bit)로 사용</strong> 하고 나머지는 값을 표현하는 데 사용한다. 따라서 <code>N</code> 비트로 표현할 수 있는 부호있는 정수의 범위는 곧  $-2^{N-1}$  ~  $2^{N-1} - 1$ 까지다. 따라서 1 바이트의 경우 8 비트와 같기 때문에 <code>byte</code> 자료형에 저장할 수 있는 수의 범위는 곧 $-128$ ~ $127$ 까지다.</p>
+<p>이때 유의할 점은 <strong>JVM의 피연산자 스택(operand stack)이 피연산자를 4 바이트 단위로 저장</strong> 한다는 점이다. 따라서 <code>byte</code> , <code>short</code> 자료형의 경우 필수적으로 저장공간을 절약해야 할 때 그 크기에 맞춰 사용하고 일반적인 경우에는 4 바이트보다 작은 자료형의 값을 계산할 때 이를 4 바이트로 변환해서 연산이 수행되기 때문에 오히려 <code>int</code> 자료형을 사용하는 게 훨씬 효율적이다. 더욱이 <code>byte</code> 자료형의 경우 앞선 예시에서 알 수 있듯이 범위가 매우 작기 때문에 연산의 결괏값이 예상하지 못한, <strong>오버플로우가 발생</strong> 할 수 있다.</p>
+<p>아래 이미지를 통해 오버플로우에 대해 간단하게 이해할 수 있다. <code>byte</code> 자료형의 최대값은 <code>127</code> 이고 최소값은 <code>-128</code> 이다. 그런데 각각 <code>1</code> 을 더하고 빼서 범위를 넘길 경우 아래와 같이 <code>128</code> 이 아닌 최소값 <code>-128</code> 로, <code>-129</code> 가 아닌 최대값 <code>127</code> 로 변한 것을 확인할 수 있다. 이처럼 <strong>변수가 표현할 수 있는 범위를 넘어선 것</strong> 을 오버플로우라고 한다. 이때  <code>(byte)</code> 라는 표현 방식은 형변환을 의미한다. 이에 관해서는 이따가 형변환 부분에서 더 자세히 살펴보고자 한다.</p>
+<p><img alt="오버플로우" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/7.png" /></p>
+<h4 id="float-double">실수형 ( <code>float</code> , <code>double</code> )<a class="headerlink" href="#float-double" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>float</code> : 4 바이트의 크기를 가진다.</li>
+<li><code>double</code> : 8 바이트의 크기를 가진다. <strong>기본 자료형(default data type)</strong> 이다.</li>
+</ul>
+<p>정수형의 <code>int</code> 자료형과 실수형의 <code>float</code> 자료형은 같은 4 바이트의 크기를 갖지만 실수형인 float 자료형이 정수형인 <code>int</code> 자료형보다 훨씬 더 넓은 범위의 숫자를 표현할 수 있다. 이는 어떻게 가능한 것일까? 바로 실수형은 부동 소수점(floating point) 방식으로 값을 저장하기 때문이다.</p>
+<p>부동 소수점이란 값을 <strong>부호(Sign)</strong> , <strong>지수(Exponent)</strong> , <strong>가수(Mantissa)</strong> , 이렇게 세 부분으로 나누어 표현하는 방식을 의미한다. </p>
+<ul>
+<li>부호: 부호 비트를 의미하며 1 비트의 크기를 가진다. 값이 <code>0</code> 이면 양수를, <code>1</code> 이면 음수를 의미한다. 정수형의 경우 부호를 바꾸기 위해서는 2의 보수법을 사용해야 하는데 실수형에서는 그렇지 않기 때문에 단순히 해당 부호의 값을 <code>0</code> 에서 <code>1</code> 로 또는 <code>1</code> 에서 <code>0</code> 으로 변경해주기만 하면 된다.</li>
+<li>지수: <code>float</code> 자료형의 경우 8 비트의 크기를 가진다. 부호있는 정수로 <code>float</code> 의 경우 $-127$ 부터 $128$ 까지 총 $2^8$ 개 만큼의 값을 저장할 수 있게 된다.</li>
+<li>가수: 실제 값을 저장하는 부분으로 <code>float</code> 자료형의 경우 총 32 비트 중 부호와 지수를 뺀 나머지 23 비트의 크기를 가진다. 따라서 <code>float</code> 자료형은 2진수 23자리를 저장할 수 있게 되는데 이는 곧 10진수로 표현했을 때 7자리 정도의 숫자이기 때문에 <code>float</code> 자료형의 정밀도는 7자리가 된다.</li>
+</ul>
+<p>예를 들어 $0.2 * 2^-1$ 과 같은 방식으로 부동 소수점을 표현할 수 있는데 이때 $0.2$ 가 곧 가수이고 컴퓨터는 이진법으로 이루어져있기 때문에 밑수가 $2$ 이면서 지수가 $-1$ 이 된다. 이를 정규화하게 되면 결국 첫 번째 자리의 숫자는 항상 $1$ 이 되고 결국 이러한 특징으로 인해 컴퓨터의 부동 소수점 표현은 주로 $1.m * 2^n$ 과 같다.</p>
+<p>유의할 점은 이러한 지수 표현 방식으로 인해 아무리 값을 작게 해도 $0$ 을 표현할 수 없는 등의 <strong>정밀도에 대한 오류가 발생</strong> 하게 된다. 아래 코드 예시를 살펴보자. <code>0.1</code> 을 <code>10000</code> 번 더했기 때문에 <code>1001</code> 이 나와야 될 것으로 생각하지만 실제 결괏값은 이상한 더미 데이터가 붙게 된다.</p>
+<p><img alt="실수형의 표현 오류" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/8.png" /></p>
+<blockquote>
+<p>잠깐! <strong>정규화</strong> 란 무엇일까?</p>
+<p><strong>정규화는 밑수보다 작은 한 자리까지 가수로 표현되는 것</strong> 을 의미하는 데 앞서 살펴봤듯이 컴퓨터에서는 이진법을 사용하기 때문에 밑수가 $2$ 라서 결국 가수가 $2$ 보다 작은 한 자리, 다시 말해 $1$ 이 된다.</p>
+<p>잠깐! <strong>실수형에서는 오버플로우가 발생</strong> 하지 않을까?</p>
+<p>실수형에서도 물론 오버플로우가 존재한다. 다만 이때는 정수형과 달리 <strong>변수의 값이 무한대(Infinity)</strong> 가 된다. 그리고 정수형에는 없는 <strong>언더플로우(underflow)가 존재하는데 실수형으로 표현할 수 없는 작은 값</strong> 을 의미하며 이때 변수의 값은 $0$ 이 된다.</p>
+</blockquote>
+<h4 id="_12">결론<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<p>기본형의 크기와 표현할 수 있는 최소값부터 최대값까지를 간단하게 나타내면 아래 이미지와 같다.</p>
+<p><img alt="기본형 크기와 표현할 수 있는 값의 범위" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/9.png" /></p>
+<h3 id="reference-type">참조형 (Reference Type)<a class="headerlink" href="#reference-type" title="Permanent link">&para;</a></h3>
+<p>참조형 변수는 어떤 값이 저장되어 있는 <strong>주소(memory address)를 값으로 갖는다.</strong> 이는 다시 말하면 객체의 주소를 저장한다는 의미로 기본형을 제외한 나머지 다른 모든 타입이 참조형에 해당한다. 참조형 변수를 선언할 때는 변수의 타입으로 클래스의 이름을 사용하므로 클래스 이름이 곧 타입이 된다. 이때 <code>new</code> 라는 연산자와 함께 생성자(Constructor)를 사용한다. 그리고 그 <strong>결괏값으로 생성된 객체의 주소가 참조변수에 저장</strong> 되는 것이다.</p>
+<p>아래 이미지를 통해 간단하게 살펴보자. 참조형 변수 <code>obj1</code> 의 값이 객체 <code>501</code> 를 가리키고 있고 해당 객체의 값은 <code>7103</code> 과 <code>7104</code> 를 가리키고 있는 걸 알 수 있다. 그리고 실질적인 값은 결국 7103 의 주소에 저장되어 있는 변수 a 가 저장하고 있는 값인 <code>5003</code> 과 <code>7104</code> 의 주소에 저장되어 있는 변수 <code>b</code> 가 저장하고 있는 값인 <code>5004</code> 가 된다.</p>
+<p>이처럼 결괏값으로 생성된 객체의 주소인 <code>5001</code> 의 실질적인 값인 <code>7103</code> 고 <code>7104</code> 가 참조변수 <code>obj1</code> 에 의해 참조되는 것이다.</p>
+<p><img alt="참조형 데이터의 할당" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/10.png" /></p>
+<p>결론적으로 <strong>기본형의 경우 할당과 연산 때 값을 복제</strong> 하고 <strong>참조형의 경우 할당과 연산 때 값을 참조</strong> 한다는 차이점이 존재하는데 이를 통해 참조형 중의 경우 <strong>깊은 복사(Deep Copy)와 얕은 복사(Shallow Copy)</strong> 개념이 연관된다. 이에 관해서는 배열 챕터와 객체 지향 프로그래밍 챕터에서 더 자세하게 다뤄보고자 한다. </p>
+<h4 id="_13">메모리와 데이터<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
+<p>컴퓨터는 모든 데이터를 <code>0</code> 또는 <code>1</code> 의 이진법으로 기억한다. 이때 <code>0</code> 또는 <code>1</code> 로만 표현할 수 있는 하나의 메모리 조각을 <strong>비트(bit)</strong> 라고 하는데 <strong>메모리는 이러한 비트들의 집합</strong> 으로 구성되며 각 <strong>비트는 고유한 식별자(unique indentifier)를 통해 위치를 확인</strong> 할 수 있다.</p>
+<p>이때 비트를 묶어서 표현할 경우 검색 시간을 줄일 수 있는 것은 물론 표현할 수 있는 데이터의 개수도 늘어난다. 하지만 동시에 낭비되는 비트가 생기기 때문에 이러한 고민을 통해 등장한 것이 <strong>바이트(byte)</strong> 다. 1바이트는 8개의 비트로 구성돼 있다.</p>
+<p>비트가 고유한 식별자를 가지고 있는 것처럼 바이트 또한 시작하는 비트의 식별자로 위치를 파악할 수 있다. 이처럼 바이트의 시작하는 비트가 곧 메모리 주소를 의미한다. <strong>자바에서는 메모리에 1 바이트 단위로 일련번호가 붙어있는데 이 번호가 곧 메모리 주소</strong> 다. 이때 객체의 주소는 객체가 저장된 메모리 주소를 의미한다.</p>
+<blockquote>
+<p>잠깐! <strong>자료형(Data Type)</strong> 과 <strong>타입(Type)</strong> 의 차이가 뭔가요?</p>
+<p>기본적으로 타입이 자료형을 포함하는 보다 넓은 의미다. <strong>기본형의 경우 값(data)의 종류에 따라 구분이 되기 때문에 기본형의 종류를 이야기할 때는 자료형(data type)</strong> 이라는 용어를 사용하지만 <strong>참조형의 경우 객체의 주소를 저장하기 때문에 값이 아닌 종류(type)로 구별해서 타입(type)</strong> 이라는 용어를 쓴다.</p>
+</blockquote>
+<h3 id="_14">기본값<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<p>자바의 경우 자료형에 따른 <strong>변수의 기본값</strong> 은 아래 이미지 처럼 존재한다. 우선 이에 대해서 알기 위해서는 <strong>C언어에서의 쓰레기 값(Garbage Value)</strong> 에 대해서 알고 있으면 좋다.</p>
+<p><img alt="자료형의 기본값" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/11.jpg" /></p>
+<h4 id="garbage-value">쓰레기 값 (Garbage Value)<a class="headerlink" href="#garbage-value" title="Permanent link">&para;</a></h4>
+<p><strong>쓰레기 값이란 메모리에 어떤 변수를 선언하여 어떤 위치에 할당 시키고 그 변수에 어떤 값(데이터)을 할당 할 때 만약 값을 할당하지 않으면 무의미한 아무 값으로 초기화 되는 걸 의미</strong> 한다. C언어 코드를 통해 이를 살펴보면 아래 이미지와 같다.</p>
+<p>선언만 <code>int</code> 자료형 <code>id</code> 에 값이 초기화 해주지 않았는데 임의의 값 <code>228601893</code> 이 할당 됐다. 반대로 변수 <code>id2</code> 의 경우 <code>1</code> 을 초기화해주자 알맞은 값인 <code>1</code> 이 결괏값으로 출력된 것을 알 수 있다. </p>
+<p><img alt="C언어 쓰레기 값" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/12.png" /></p>
+<p>이처럼 C언어에서의 변수는 선언과 동시에 초기화를 해줘야 예상하지 못했던 결괏값을 사용하게 되는 오류를 방지할 수 있게 되는데 자바의 경우 지역 변수에서는 선언만 했을 경우, 다시 말해 <strong>초기화하지 않은-값을 할당하지 않은 변수의 경우 스코프 내에서 사용할 수 없게 컴파일러 오류를 반환</strong> 한다.</p>
+<p>그렇다면 변수의 기본값이 왜 존재하는 걸까? 이는 멤버 변수와 같은 글로벌 변수를 위해 존재한다. 아래 이미지와 같이 <code>Test</code> 라는 객체에 <code>testNum</code> 이라는 <code>int</code> 자료형을 선언만 했을 경우 이를 사용하게 되면 <code>0</code> 이라는 결괏값을 출력하는 것을 확인할 수 있다. 반대로 지역 변수 <code>tesNum2</code> 은 선언만 했을 때는 따로 컴파일 오류를 발생시키지 않지만 이를 사용하려고 <code>println()</code> 을 통해 출력을 시도했을 때는 초기화되지 않았다는 컴파일 오류를 반환하는 것을 알 수 있다. 조금 더 자세한 내용은 변수의 스코프(Scope)와 생명주기(Lifetime), 그리고 객체 지향 프로그래밍 때 더 자세히 다뤄보고자 한다.</p>
+<p><img alt="기본값 테스트" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/13.png" /></p>
+<h3 id="_15">상수와 리터럴<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<h4 id="constant">상수 (Constant)<a class="headerlink" href="#constant" title="Permanent link">&para;</a></h4>
+<p>상수는 변수와 마찬가지로 값을 저장할 수 있는 공간이지만 변수와 달리 한 번 값을 저장하면 <strong>다른 값으로 변경할 수 없다.</strong> 변수와 선언하는 방법이 동일하지만 타입 앞에 키워드 <code>final</code> 을 붙여줘야 한다.</p>
+<h4 id="literal">리터럴 (Literal)<a class="headerlink" href="#literal" title="Permanent link">&para;</a></h4>
+<p>우리가 흔히 사용하는 <code>123</code> , <code>"ABC"</code> 와 같은 값들 또한 상수이다. 하지만 프로그래밍에서 상수와 이러한 값을 구별하기 위해 기존에 우리가 아는 상수를 리터럴이라는 용어로 부르기로 했다. 따라서 리터럴은 그 자체로 값을 의미하는 것이라 생각하면 된다. 변수, 상수, 리터럴을 구분하면 간단하게 아래 이미지와 같다.</p>
+<p><img alt="변수, 상수, 리터럴 구분" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/14.jpg" /></p>
+<p>앞서 실수 자료형의 기본 자료형은 <code>double</code> 이기 때문에 실수를 표현할 때는 리터럴에 접미사로 <code>f</code> 또는 <code>F</code> 를 붙여줘야 한다. <code>double</code> 자료형의 경우 실수형의 기본 자료형이기는 하지만 <code>float</code> 과 마찬가지로 구별을 위해서는 <code>d</code> 또는 <code>D</code> 를 접미사로 붙여줘야 하며 정수형 중에서는 <code>long</code> 자료형을 사용할 때 접미사로 <code>l</code> 또는 <code>L</code> 을 사용해야 한다. 그렇지 않으면 정수형의 기본 자료형은 <code>int</code> 이기 때문에 오류가 발생한다.</p>
+<p>아래 이미지를 통해 간단하게 이를 알 수 있다. <code>float</code> 자료형에 리터럴 접미사를 사용하지 않아서 <code>incompatible types</code> 라는 오류가 발생한 것을 확인할 수 있다. 아래 리터럴 접미사 F 를 사용한 경우 정상적으로 오류 없이 <code>3.14</code> 라는 결괏값을 출력한 걸 알 수 있다.</p>
+<p><img alt="리터럴" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/15.png" /></p>
+<p>JDK1.7부터는 정수형 리터럴 중간에 구분자 <code>_</code> 를 넣을 수 있게 되어서 큰 숫자를 편하게 읽을 수 있게 됐다. 예를 들어 기존 <code>100000</code> 으로 작성해야 했던 값은 이제 <code>100_000</code> 와 같은 형태로 쓸 수 있는 것이다.</p>
+<h4 id="constant-pool">상수 풀 (Constant Pool)<a class="headerlink" href="#constant-pool" title="Permanent link">&para;</a></h4>
+<p>이전 JVM에서 메모리 영역에 대해 이야기하며 프로그램을 실행할 때 기본적으로 운영체제가 메모리에 프로그램을 할당하는 공간 중 데이터 영역(Data Area)에 관해 이야기한 적이 있다. <strong>전역 변수와 정적 변수가 저장되는 공간</strong> 이라고도 언급했었는데 <strong>상수와 리터럴</strong> 이 바로 이 영역에 저장된다. <strong>프로그램이 실행될 때 메모리가 로드(Load)되며 프로그램의 실행이 끝나고 언메모리 될 때 해제</strong> 된다. <strong>데이터 영역 또는 상수 풀이라고 부른다.</strong></p>
+<h3 id="_16">타입 변환<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<p>변수 또는 상수의 타입을 다른 타입으로 변환하는 것을 의미한다. 이때 <strong>기본형의 경우 <code>boolean</code> 자료형을 제외한 나머지 자료형끼리 서로 형변환이 가능</strong> 하다. 그리고 <strong>기본형과 참조형 간의 형변환은 불가능</strong> 하다.</p>
+<h4 id="type-promotion">자동 형변환 (Type Promotion)<a class="headerlink" href="#type-promotion" title="Permanent link">&para;</a></h4>
+<p>묵시적 형변환이라고도 한다. 바이트 <strong>크기가 작은 자료형에서 더 큰 자료형으로</strong> 의 형변환으로 자동으로 형변환이 이루어진다.</p>
+<h4 id="type-casting">강제 형변환 (Type Casting)<a class="headerlink" href="#type-casting" title="Permanent link">&para;</a></h4>
+<p>명시적 형변환이라고도 한다. 바이트 <strong>크기가 더 큰 자료형을 작은 자료형으로</strong> 형변환하려는 시도인데 강제로 형변환을 수행하기 때문에 프로그래머가 이에 대한 <strong>손실이 발생</strong> 해도 그것을 감수해야한다. </p>
+<h4 id="_17">기타<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h4>
+<p>우리는 앞서 <strong>JVM의 피연산자 스택이 피연산자를 4 바이트 단위로 저장</strong> 하기 때문에 이보다 작은 자료형인 <code>byte</code> 와 <code>short</code> 의 값을 계산할 때 해당 자료형들을 4 바이트로 변환한다고 배웠다. 앞서 <code>byte</code> 자료형의 오버플로우 예시로 살펴 본 코드를 통해 형변환의 두 종류에 대해 다시 알아보자.</p>
+<p><code>byteMax + 1</code> 또는 <code>byteMin - 1</code> 연산을 수행할 경우 4 바이트 단위로 저장 돼 <code>byteMax</code> 와 <code>byteMin</code> 값이 4 바이트라서 오버플로우가 발생하지 않고 각각 <code>128</code> 과 <code>-129</code> 라는 결괏값이 출력된다. 이렇게 작은 크기의 자료형이 자연스럽게 큰 자료형으로 형변환이 발생하는 걸 자동 형변환, 타입 프로모션이라 하며 반대로 오버플로우 상황을 연출하기 위해 <code>int</code> 자료형 결괏값 <code>128</code> 과 <code>-129</code> 를 <code>(byte)</code> 와 같은 형태로 형변환 한 것을 강제 형변환, 타입 캐스팅이라 한다.</p>
+<p><img alt="형변환" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/16.png" /></p>
+<h3 id="type-inference">타입 추론 (Type Inference)<a class="headerlink" href="#type-inference" title="Permanent link">&para;</a></h3>
+<p>기존 <strong>스크립트 언어에서 가능했던 타입 추론이 컴파일러 언어인 자바 버전 10 이상부터 자바에서도 가능</strong> 해졌다. <code>var</code> 라는 키워드를 사용하여 <strong>초기화 된 값의 타입을 추론하여 변수의 자료형을 결정</strong> 할 수 있는 기능이다. 이때 유의할 점은 초기화를 하지 않으면, 다시 말해 <strong>변수에 값을 할당하지 않으면 오류가 발생</strong>한다.</p>
+<p>앞서 <code>println()</code> 은 문자형 <code>char</code> 자료형을 값으로 받을 경우 정수가 입력 됐을 때 유니코드에 의해 해당하는 문자를 반환한다는 것을 알 수 있었다. 아래 이미지를 통해 변수 <code>i</code> 에 초기화 된 값이 정수형 <code>10</code> 이기 때문에 <code>i</code> 의 자료형이 <code>int</code> 가 됐다. 따라서 <code>A</code> 라는 값을 다시 입력하더라도 <code>char</code> 자료형 변수 <code>k</code> 처럼 <code>A</code> 가 출력되는 것이 아니라 int 자료형 <code>j</code> 처럼 <code>65</code> 가 출력된다.</p>
+<p><img alt="타입 추론" src="../../../images/1%EA%B8%B0/%EC%9D%B4%ED%83%9C%ED%98%84/1%EC%A3%BC%EC%B0%A8/17.png" /></p>
+                
+                  
+                
+              
+              
+  
+    <div id="__comments">
+      <hr />
+      <p><strong>작성자</strong>: 이태현</p>
+      <p><strong>작성일</strong>: 2021-07-11</p>
+      <hr />
+      <script src="https://utteranc.es/client.js"
+        repo="week-with-me/TWIL"
+        issue-term="title"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </div>
+  
+
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../2021-07-04-%EC%98%A4%EB%A6%AC%EC%97%94%ED%85%8C%EC%9D%B4%EC%85%98-%EB%B0%8F-Git-%EC%82%AC%EC%9A%A9%EB%B2%95/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 오리엔테이션 및 Git 사용법" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              오리엔테이션 및 Git 사용법
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../2021-07-18-%EC%9E%90%EB%B0%94%EC%9D%98-%EC%97%B0%EC%82%B0%EC%9E%90/" class="md-footer__link md-footer__link--next" aria-label="Next: 자바의 연산자" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              자바의 연산자
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["header.autohide", "navigation.tabs", "search.suggest", "search.highlight"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+        <script src="../../../js/termynal.js"></script>
+      
+        <script src="../../../js/custom.js"></script>
+      
+    
+  </body>
+</html>
